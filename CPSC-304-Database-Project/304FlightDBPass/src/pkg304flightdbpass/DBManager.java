@@ -19,19 +19,21 @@ public class DBManager {
 	};
 
 //	public static void main(String[] args) throws SQLException {
-//		// Passenger p = new Passenger();
-//		// System.out.println(p.searchByCity("ToRonto"));
-//		Passenger p = new Passenger();
-//		p.checkCredentials("GL139320");;
-//		System.out.println(p.searchByAirline("porter airlines"));
-//		System.out.println(p.checkSeatAvailabilities("38092225"));
-//		System.out.println(p.searchBySeatNo("63A", "38092225"));
-//		//e.changeSeatType("14S","07H");
-//		//e.cancelTicket(13287754);
-//		//p.addMember("cr123", "cr123@gmail.com", "UG381918");
-//		//p.deleteAccount("cr123", "cr123@gmail.com", "UG381918");
-//		//p.changePersonalInformation("UG381918", "cr124@gmail.com", "cr1234");
-//		//p.purchaseTicket("nuss", "breaks", "07H", "38092225", "AB149865");
+	// Passenger p = new Passenger();
+	// System.out.println(p.searchByCity("ToRonto"));
+	//Passenger p = new Passenger();
+	//Employee e = new Employee();
+	//System.out.println(p.searchByAirline("porter airlines"));
+	//System.out.println(p.checkSeatAvailabilities("38092225"));
+	//System.out.println(p.searchBySeatNo("63A", "38092225"));
+	//System.out.println(p.searchMain("ZUC", "YAE", "2016-06-09"));
+	// p.checkCredentials("GL139320");
+	// p.addMember("cr123", "cr123@gmail.com", "GL139320");
+	// p.changePersonalInformation("GL139320", "cr124@gmail.com", "cr1234");
+	// p.deleteAccount("cr1234", "cr124@gmail.com", "GL139320");
+	// p.purchaseTicket("nuss", "breaks", "07H", "38092225", "AB149865");
+	// e.changeSeatType("42U","50X");
+	// e.cancelTicket(13287754);
 //	}
 
 	public void connect() {
