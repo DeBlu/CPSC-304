@@ -30,7 +30,7 @@ public class DBManager {
 		// p.changePersonalInformation("GL139320", "cr124@gmail.com", "cr1234");
 		// p.deleteAccount("cr1234", "cr124@gmail.com", "GL139320");
 		// p.purchaseTicket("nuss", "breaks", "07H", "38092225", "AB149865");
-		// e.changeSeatType("50X","42U");
+		// e.changeSeatType("42U","50X");
 		// e.cancelTicket(13287754);
 	}
 

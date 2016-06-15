@@ -21,7 +21,7 @@ public class Employee {
 			System.out.println("Failed to change seat type.");
 			e.printStackTrace();
 		}
-		System.out.println("Available seat : " + checkExist);
+		System.out.println("Seat Number exist but already occupied: " + checkExist);
 		if (checkExist == 0) {
 			System.out.println("seat " + seatNo
 					+ "does not exist in the database.");
