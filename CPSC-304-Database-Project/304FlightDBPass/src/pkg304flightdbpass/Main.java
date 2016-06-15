@@ -28,7 +28,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 	Passenger p = new Passenger();
     Button btnSearch, btnMyTick, btnReg, btnPassTick, btnMemTick, btnCreate,
-            btnSFMM, btnMTMM, btnRegMM, btnSRMM, btnFIMM, btnSSMM, btnTPMM,
+            btnSFMM, btnMTMM, btnRegMM, btnSRMM, btnFIMM, btnSSMM, btnTPMM,btnCIMM,
             btnSearchFlight, btnSortAirline, btnSortPrice, btnSortDate,btnBusiness,
             btnFirst, btnEcon,btnEconPlus,btnBuy, btnTPPass, btnTPMem, btnMoreInfo,
             btnMTRMM, btnChangeInfo, btnUpdateInfo;
@@ -390,14 +390,15 @@ public class Main extends Application {
         ciGrid.setPadding(new Insets(25, 25, 25, 25));
         
         //Change Info header
-        Text ciTitle = new Text("Tickets");
+        Text ciTitle = new Text("Change Info");
         ciTitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         ciGrid.add(ciTitle, 0, 0, 2, 1);
 
+        
         //Change Info Instructions
         Text ciInstruct1 = new Text ("Enter Passport #");
         ciGrid.add(ciInstruct1, 0, 1, 2, 1);
-        
+            
         //Passport Number Field
         Label ciPassNum = new Label("Passport #:");
         ciGrid.add(ciPassNum, 0, 2);
@@ -406,24 +407,29 @@ public class Main extends Application {
         
         //Change Info Instructions 2
         Text ciInstruct2 = new Text ("Enter info you want to change");
-        ciGrid.add(ciInstruct2, 0, 2, 2, 1);
-                
+        ciGrid.add(ciInstruct2, 0, 3, 2, 1);
+        
         //User Name Field
         Label ciUserName = new Label ("User Name:");
-        ciGrid.add(ciUserName, 0, 3);
+        ciGrid.add(ciUserName, 0, 4);
         userNameField = new TextField();
-        ciGrid.add(userNameField, 1, 3);
+        ciGrid.add(userNameField, 1, 4);
 
         //Email Field
         Label ciEmail = new Label("Passport #:");
-        ciGrid.add(ciEmail, 0, 4);
+        ciGrid.add(ciEmail, 0, 5);
         userEmailField = new TextField();
-        ciGrid.add(userEmailField, 1, 4);
+        ciGrid.add(userEmailField, 1, 5);
        
         //Update button; return to Main Menu
         btnUpdateInfo = new Button("Update");
         btnUpdateInfo.setOnAction(e -> updateInfo(e, passNumField, userNameField, userEmailField));
-        ciGrid.add(btnUpdateInfo, 1, 5);
+        ciGrid.add(btnUpdateInfo, 1, 6);
+        
+        //Cancel button; return to Main Menu
+        btnCIMM = new Button("Main Menu");
+        btnCIMM.setOnAction(e -> changeScene(e));
+        ciGrid.add(btnCIMM, 4, 0);
         
         //REGISTER
         
@@ -453,14 +459,14 @@ public class Main extends Application {
         
         //Password Field
         Label regPassword = new Label("Passport #:");
-        regGrid.add(regPassword, 0, 2);
+        regGrid.add(regPassword, 0, 3);
         userPassport = new TextField();
         regGrid.add(userPassport, 1, 3, 2, 1);
         
         //Create Member button
         btnCreate = new Button("Create");
         btnCreate.setOnAction(e -> Register(e, userNameField, userEmailField, userPassport));
-        regGrid.add(btnCreate, 1, 3);
+        regGrid.add(btnCreate, 1, 4);
         
         //Cancel button; return to Main Menu
         btnRegMM = new Button("Main Menu");
