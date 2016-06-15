@@ -12,7 +12,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -31,11 +30,12 @@ public class Main extends Application {
     Button btnSearch, btnMyTick, btnReg, btnPassTick, btnMemTick, btnCreate,
             btnSFMM, btnMTMM, btnRegMM, btnSRMM, btnFIMM, btnSSMM, btnTPMM,
             btnSearchFlight, btnSortAirline, btnSortPrice, btnSortDate,btnBusiness,
-            btnFirst, btnEcon,btnEconPlus,btnBuy, btnTPPass, btnTPMem, btnMoreInfo;
-    Scene mmScene, sfScene, srScene,  mtScene, regScene, fiScene, ssScene, tpScene;
+            btnFirst, btnEcon,btnEconPlus,btnBuy, btnTPPass, btnTPMem, btnMoreInfo,
+            btnMTRMM, btnChangeInfo, btnUpdateInfo;
+    Scene mmScene, sfScene, srScene,  mtScene, regScene, fiScene, ssScene, tpScene, mtrScene, ciScene;
     GridPane srGrid, fiGrid, ssGrid;
     Stage thestage;
-    TextField userNameField, passNumField, userPassport, originField, destField, dateField;
+    TextField userNameField, passNumField, userEmailField, userPassport, originField, destField, dateField;
 
     @Override
     public void start(Stage primaryStage) {
@@ -285,7 +285,7 @@ public class Main extends Application {
         //Password Field
         Label tpPassword = new Label("Passport #:");
         tpGrid.add(tpPassword, 0, 6);
-        userPassport = new PasswordField();
+        userPassport = new TextField();
         tpGrid.add(userPassport, 1, 6);
         
         //Member Buy Ticket Button
@@ -334,9 +334,9 @@ public class Main extends Application {
         mtGrid.add(userNameField, 1, 5);
 
         //Password Field
-        Label mtPassword = new Label("Password:");
+        Label mtPassword = new Label("Passport #:");
         mtGrid.add(mtPassword, 0, 6);
-        userPassport = new PasswordField();
+        userPassport = new TextField();
         mtGrid.add(userPassport, 1, 6);
         
         //Member Find Tickets Button
@@ -349,6 +349,81 @@ public class Main extends Application {
         btnMTMM.setOnAction(e -> changeScene(e));
         mtGrid.add(btnMTMM, 4, 0);
         
+        
+        //MY TICKETS
+        
+        //My Tickets grid
+        GridPane mtrGrid = new GridPane();
+        mtrGrid.setAlignment(Pos.TOP_LEFT);
+        mtrGrid.setHgap(10);
+        mtrGrid.setVgap(10);
+        mtrGrid.setPadding(new Insets(25, 25, 25, 25));
+        
+        //My Tickets header
+        Text mtrTitle = new Text("Tickets");
+        mtrTitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        mtrGrid.add(mtrTitle, 0, 0, 2, 1);
+
+        //My Tickets Instructions
+        Text mtrInstruct = new Text ("Here are your tickets");
+        mtrGrid.add(mtrInstruct, 0, 1, 2, 1);
+        
+        //Change Personal Info
+        btnChangeInfo = new Button("Change Info");
+        btnChangeInfo.setOnAction(e -> changeScene(e));
+        mtrGrid.add(btnChangeInfo, 3, 0);
+        
+        //Cancel button; return to Main Menu
+        btnMTRMM = new Button("Main Menu");
+        btnMTRMM.setOnAction(e -> changeScene(e));
+        mtrGrid.add(btnMTRMM, 4, 0);
+        
+        //TODO Show Tickets
+        
+        //CHANGE INFO
+        
+        //Change Info grid
+        GridPane ciGrid = new GridPane();
+        ciGrid.setAlignment(Pos.TOP_LEFT);
+        ciGrid.setHgap(10);
+        ciGrid.setVgap(10);
+        ciGrid.setPadding(new Insets(25, 25, 25, 25));
+        
+        //Change Info header
+        Text ciTitle = new Text("Tickets");
+        ciTitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        ciGrid.add(ciTitle, 0, 0, 2, 1);
+
+        //Change Info Instructions
+        Text ciInstruct1 = new Text ("Enter Passport #");
+        ciGrid.add(ciInstruct1, 0, 1, 2, 1);
+        
+        //Passport Number Field
+        Label ciPassNum = new Label("Passport #:");
+        ciGrid.add(ciPassNum, 0, 2);
+        passNumField = new TextField();
+        ciGrid.add(passNumField, 1, 2);
+        
+        //Change Info Instructions 2
+        Text ciInstruct2 = new Text ("Enter info you want to change");
+        ciGrid.add(ciInstruct2, 0, 2, 2, 1);
+                
+        //User Name Field
+        Label ciUserName = new Label ("User Name:");
+        ciGrid.add(ciUserName, 0, 3);
+        userNameField = new TextField();
+        ciGrid.add(userNameField, 1, 3);
+
+        //Email Field
+        Label ciEmail = new Label("Passport #:");
+        ciGrid.add(ciEmail, 0, 4);
+        userEmailField = new TextField();
+        ciGrid.add(userEmailField, 1, 4);
+       
+        //Update button; return to Main Menu
+        btnUpdateInfo = new Button("Update");
+        btnUpdateInfo.setOnAction(e -> updateInfo(e, passNumField, userNameField, userEmailField));
+        ciGrid.add(btnUpdateInfo, 1, 5);
         
         //REGISTER
         
@@ -369,15 +444,22 @@ public class Main extends Application {
         userNameField = new TextField();
         regGrid.add(userNameField, 1, 1);
 
+        //Email Field
+        Label regEmail = new Label("Email :");
+        regGrid.add(regEmail, 0, 2);
+        userEmailField = new TextField();
+        regGrid.add(userEmailField, 1, 2, 2, 1);
+        
+        
         //Password Field
         Label regPassword = new Label("Passport #:");
         regGrid.add(regPassword, 0, 2);
-        userPassport = new PasswordField();
-        regGrid.add(userPassport, 1, 2, 2, 1);
+        userPassport = new TextField();
+        regGrid.add(userPassport, 1, 3, 2, 1);
         
         //Create Member button
         btnCreate = new Button("Create");
-        btnCreate.setOnAction(e -> Register(e, userNameField, userPassport));
+        btnCreate.setOnAction(e -> Register(e, userNameField, userEmailField, userPassport));
         regGrid.add(btnCreate, 1, 3);
         
         //Cancel button; return to Main Menu
@@ -393,6 +475,8 @@ public class Main extends Application {
         ssScene = new Scene (ssGrid, 450, 320);
         tpScene = new Scene (tpGrid, 450, 320);
         mtScene = new Scene(mtGrid, 450, 320);
+        ciScene = new Scene (ciGrid, 450, 320);
+        mtrScene = new Scene (mtrGrid, 450, 320);
         regScene = new Scene(regGrid, 450, 320);
  
         
@@ -408,12 +492,14 @@ public class Main extends Application {
             thestage.setScene(sfScene);
         if (e.getSource()==btnMyTick)
             thestage.setScene(mtScene);
+        if (e.getSource()==btnChangeInfo)
+            thestage.setScene(ciScene);
         if (e.getSource()==btnReg)
             thestage.setScene(regScene);
         if (e.getSource()==btnSFMM||e.getSource()==btnMTMM||e.getSource()==btnRegMM)
             thestage.setScene(mmScene);
     }
- public void Register( ActionEvent e, TextField userNameField, TextField userPassport) {
+ public void Register( ActionEvent e, TextField userNameField, TextField userEmail, TextField userPassport) {
         //TODO Verify Name and Password, then create DB entry
     
     }
@@ -425,6 +511,7 @@ public class Main extends Application {
         } else {
             //TODO verify login, and then find tickets associated with member
         }
+        thestage.setScene(mtrScene);
  }       
  public void searchFlight( ActionEvent e, TextField originField, TextField destField, TextField dateField) {
      //TODO 
@@ -504,7 +591,13 @@ public class Main extends Application {
             //TODO verify login, and then buy ticket as member
         }
         thestage.setScene(mtScene);
- }       
+ }     
+  
+  public void updateInfo (ActionEvent e, TextField passNumField, TextField userNameField, TextField userEmailField) {
+      //TODO update Info
+  }
+
+  
         
     /**
      * @param args the command line arguments
