@@ -35,8 +35,7 @@ public class Main extends Application {
     Scene mmScene, sfScene, srScene,  mtScene, regScene, fiScene, ssScene, tpScene;
     GridPane srGrid, fiGrid, ssGrid;
     Stage thestage;
-    PasswordField userPassField;
-    TextField userNameField, passNumField, originField, destField, dateField;
+    TextField userNameField, passNumField, userPassport, originField, destField, dateField;
 
     @Override
     public void start(Stage primaryStage) {
@@ -284,14 +283,14 @@ public class Main extends Application {
         tpGrid.add(userNameField, 1, 5);
 
         //Password Field
-        Label tpPassword = new Label("Password:");
+        Label tpPassword = new Label("Passport #:");
         tpGrid.add(tpPassword, 0, 6);
-        userPassField = new PasswordField();
-        tpGrid.add(userPassField, 1, 6);
+        userPassport = new PasswordField();
+        tpGrid.add(userPassport, 1, 6);
         
         //Member Buy Ticket Button
         btnTPMem = new Button("Buy Ticket");
-        btnTPMem.setOnAction(e -> buyTicket(e, null, userNameField, userPassField));
+        btnTPMem.setOnAction(e -> buyTicket(e, null, userNameField, userPassport));
         tpGrid.add(btnTPMem, 1, 7);
         
         //Cancel button; return to Main Menu
@@ -337,12 +336,12 @@ public class Main extends Application {
         //Password Field
         Label mtPassword = new Label("Password:");
         mtGrid.add(mtPassword, 0, 6);
-        userPassField = new PasswordField();
-        mtGrid.add(userPassField, 1, 6);
+        userPassport = new PasswordField();
+        mtGrid.add(userPassport, 1, 6);
         
         //Member Find Tickets Button
         btnMemTick = new Button("Find Tickets");
-        btnMemTick.setOnAction(e -> findTicks(e, null, userNameField, userPassField));
+        btnMemTick.setOnAction(e -> findTicks(e, null, userNameField, userPassport));
         mtGrid.add(btnMemTick, 1, 7);
         
         //Cancel button; return to Main Menu
@@ -371,14 +370,14 @@ public class Main extends Application {
         regGrid.add(userNameField, 1, 1);
 
         //Password Field
-        Label regPassword = new Label("Password");
+        Label regPassword = new Label("Passport #:");
         regGrid.add(regPassword, 0, 2);
-        userPassField = new PasswordField();
-        regGrid.add(userPassField, 1, 2, 2, 1);
+        userPassport = new PasswordField();
+        regGrid.add(userPassport, 1, 2, 2, 1);
         
         //Create Member button
         btnCreate = new Button("Create");
-        btnCreate.setOnAction(e -> Register(e, userNameField, userPassField));
+        btnCreate.setOnAction(e -> Register(e, userNameField, userPassport));
         regGrid.add(btnCreate, 1, 3);
         
         //Cancel button; return to Main Menu
@@ -414,11 +413,11 @@ public class Main extends Application {
         if (e.getSource()==btnSFMM||e.getSource()==btnMTMM||e.getSource()==btnRegMM)
             thestage.setScene(mmScene);
     }
- public void Register( ActionEvent e, TextField userNameField, PasswordField userPassField) {
+ public void Register( ActionEvent e, TextField userNameField, TextField userPassport) {
         //TODO Verify Name and Password, then create DB entry
     
     }
- public void findTicks( ActionEvent e, TextField passNumField, TextField userNameField, PasswordField userPassField){
+ public void findTicks( ActionEvent e, TextField passNumField, TextField userNameField, TextField userPassport){
         //TODO Find tickets passed on Passport or Member login
         
         if (e.getSource()==btnPassTick) {
@@ -496,7 +495,7 @@ public class Main extends Application {
       thestage.setScene(tpScene);
   }
   
-  public void buyTicket( ActionEvent e, TextField passNumField, TextField userNameField, PasswordField userPassField){
+  public void buyTicket( ActionEvent e, TextField passNumField, TextField userNameField, TextField userPassport){
         //TODO Buy Ticket and Store with Pass num or Member ID
         
         if (e.getSource()==btnPassTick) {
