@@ -14,6 +14,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -25,7 +27,7 @@ import javafx.stage.Stage;
  * @author Admin
  */
 public class Main extends Application {
-
+	Passenger p = new Passenger();
     Button btnSearch, btnMyTick, btnReg, btnPassTick, btnMemTick, btnCreate,
             btnSFMM, btnMTMM, btnRegMM, btnSRMM, btnFIMM, btnSSMM, btnTPMM,
             btnSearchFlight, btnSortAirline, btnSortPrice, btnSortDate,btnBusiness,
@@ -427,6 +429,32 @@ public class Main extends Application {
  }       
  public void searchFlight( ActionEvent e, TextField originField, TextField destField, TextField dateField) {
      //TODO 
+     if (originField.getText() ==  null || originField.getText().trim().isEmpty()) {
+    	 Alert alert = new Alert(AlertType.INFORMATION);
+    	 alert.setTitle("Input an origin.");
+    	 alert.setHeaderText(null);
+    	 alert.setContentText("Please input an origin!");
+    	 alert.showAndWait();
+     }
+     
+     if (destField.getText() ==  null || destField.getText().trim().isEmpty()) {
+    	 Alert alert = new Alert(AlertType.INFORMATION);
+    	 alert.setTitle("Input an origin.");
+    	 alert.setHeaderText(null);
+    	 alert.setContentText("Please input an origin!");
+    	 alert.showAndWait();
+     }
+     
+     if (dateField.getText() ==  null || dateField.getText().trim().isEmpty()) {
+    	 Alert alert = new Alert(AlertType.INFORMATION);
+    	 alert.setTitle("Input an origin.");
+    	 alert.setHeaderText(null);
+    	 alert.setContentText("Please input an origin!");
+    	 alert.showAndWait();
+     }
+     
+     p.searchMain(originField.getText(), destField.getText(), dateField.getText());
+     
      thestage.setScene(srScene);
  }     
  
@@ -443,19 +471,22 @@ public class Main extends Application {
  
  public void selectFlight (ActionEvent e){
      //TODO Select the indicated flight, and return seat info
+	 
      
      thestage.setScene(fiScene);
  }
  
   public void filterSeat (ActionEvent e){
+	  //NEED TO GET THE FLIGHTNO VARIABLE FROM SOME INPUT
+	  String flightNo = null;
      if (e.getSource()==btnBusiness){
-         //TODO Select Business seats
+         p.sortSeatBySeatType(flightNo, "business");
      } else if (e.getSource()==btnFirst){
-         //TODO Select Select First Class
+         p.sortSeatBySeatType(flightNo, "first");
      } else if (e.getSource()==btnEconPlus){
-         //TODO Select Economy Plus
+         p.sortSeatBySeatType(flightNo, "economy plus");
      } else { 
-         //TODO Select Economy
+         p.sortSeatBySeatType(flightNo, "economy");
     }
      thestage.setScene(ssScene);
   }

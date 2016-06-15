@@ -1,3 +1,5 @@
+package pkg304flightdbpass;
+
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -448,7 +450,30 @@ public class Passenger {
 	 * System.out.println("The airport does not exist."); e.printStackTrace(); }
 	 * dbm.disconnect(); return rows; }
 	 */
+	
+	public ArrayList<String> sortSeatBySeatType(String flightNo, String stName) {
+		dbm.connect();
+		ArrayList<String> seatNos = new ArrayList<String>();
+		ResultSet rs = dbm
+				.fetch("select seatNo from seat where available = 'TRUE' and flightNo = '"
+						+ flightNo + "' and stName = '" + stName + "'");
+		try {
+			while (rs.next()) {
+				ResultSetMetaData metadata = rs.getMetaData();
+				int numCols = metadata.getColumnCount();
 
+				for (int i = 0; i < numCols; i++) {
+					seatNos.add(rs.getString(i + 1));
+				}
+			}
+		} catch (SQLException e) {
+			System.out.println("Invalid data.");
+			e.printStackTrace();
+		}
+		dbm.disconnect();
+		return seatNos;		
+	}
+	
 	public ArrayList<String> checkSeatAvailabilities(String flightNo) {
 		dbm.connect();
 		ArrayList<String> seatNos = new ArrayList<String>();
