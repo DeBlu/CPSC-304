@@ -449,4 +449,26 @@ public class Passenger {
 	 * dbm.disconnect(); return rows; }
 	 */
 
+	public ArrayList<String> checkSeatAvailabilities(String flightNo) {
+		dbm.connect();
+		ArrayList<String> seatNos = new ArrayList<String>();
+		ResultSet rs = dbm
+				.fetch("select seatNo from seat where available = 'TRUE' and flightNo = '"
+						+ flightNo + "'");
+		try {
+			while (rs.next()) {
+				ResultSetMetaData metadata = rs.getMetaData();
+				int numCols = metadata.getColumnCount();
+
+				for (int i = 0; i < numCols; i++) {
+					seatNos.add(rs.getString(i + 1));
+				}
+			}
+		} catch (SQLException e) {
+			System.out.println("Invalid date.");
+			e.printStackTrace();
+		}
+		dbm.disconnect();
+		return seatNos;		
+	}
 }

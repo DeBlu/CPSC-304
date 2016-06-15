@@ -27,6 +27,20 @@ arrivalTime char(4),
 PRIMARY KEY (departureDate, departureTime, arrivalDate, arrivalTime));
 	
 grant select on flightschedule to public;
+
+CREATE TABLE PlaneType (
+	ptName VARCHAR2(30) PRIMARY KEY,
+	capacity INTEGER,
+	wifi CHAR(20),
+	entertainment VARCHAR2(20));
+grant select on PlaneType to public;
+ 
+CREATE TABLE Plane (
+	pNo VARCHAR2(3) PRIMARY KEY,
+	ptName VARCHAR2(30) NOT NULL,
+	FOREIGN KEY (ptName) REFERENCES PlaneType
+		ON DELETE CASCADE);
+grant select on Plane to public;
  
 create table flight
 	(
@@ -40,7 +54,7 @@ arrivalDate DATE,
 arrivalTime char(4),
 pNo VARCHAR(3),
 FOREIGN KEY (departureDate, departureTime, arrivalDate, arrivalTime) REFERENCES FlightSchedule,
-FOREIGN KEY pNo REFERENCES plane);
+FOREIGN KEY (pNo) REFERENCES plane);
  
 grant select on flight to public;
 
@@ -83,20 +97,6 @@ FOREIGN KEY (origin_aCode) REFERENCES Airport (aCode),
 FOREIGN KEY (destination_aCode) REFERENCES Airport (aCode),
 FOREIGN KEY (departureDate, departureTime, arrivalDate, arrivalTime) REFERENCES FlightSchedule);
 grant select on airportsused to public;
-
-CREATE TABLE PlaneType (
-	ptName VARCHAR2(30) PRIMARY KEY,
-	capacity INTEGER,
-	wifi CHAR(20),
-	entertainment VARCHAR2(20));
-grant select on PlaneType to public;
- 
-CREATE TABLE Plane (
-	pNo VARCHAR2(3) PRIMARY KEY,
-	ptName VARCHAR2(30) NOT NULL,
-	FOREIGN KEY (ptName) REFERENCES PlaneType
-		ON DELETE CASCADE);
-grant select on Plane to public;
 
 CREATE TABLE SeatType (
 	stName VARCHAR2(20) PRIMARY KEY,
@@ -746,6 +746,114 @@ INSERT INTO flightschedule (departureDate,departureTime,arrivalDate,arrivalTime)
 INSERT INTO flightschedule (departureDate,departureTime,arrivalDate,arrivalTime) VALUES (to_date('2016-06-14'),'0956',to_date('2016-06-15'),'1210');
 INSERT INTO flightschedule (departureDate,departureTime,arrivalDate,arrivalTime) VALUES (to_date('2016-06-14'),'0647',to_date('2016-06-15'),'1718');
 INSERT INTO flightschedule (departureDate,departureTime,arrivalDate,arrivalTime) VALUES (to_date('2016-06-14'),'1701',to_date('2016-06-15'),'0724');
+
+INSERT INTO PlaneType (ptName,capacity,wifi,entertainment) VALUES ('Boeing 777','114','paid','TRUE');
+INSERT INTO PlaneType (ptName,capacity,wifi,entertainment) VALUES ('Boeing 757','106','free','TRUE');
+INSERT INTO PlaneType (ptName,capacity,wifi,entertainment) VALUES ('Boeing 737NG','85','paid','TRUE');
+INSERT INTO PlaneType (ptName,capacity,wifi,entertainment) VALUES ('Boeing 737 classic','112','not available','FALSE');
+INSERT INTO PlaneType (ptName,capacity,wifi,entertainment) VALUES ('Bombardier CRJ700','70','not available','FALSE');
+INSERT INTO PlaneType (ptName,capacity,wifi,entertainment) VALUES ('Airbus A320','166','paid','TRUE');
+
+INSERT INTO Plane (pNo,ptName) VALUES ('634','Boeing 777');
+INSERT INTO Plane (pNo,ptName) VALUES ('228','Boeing 737 classic');
+INSERT INTO Plane (pNo,ptName) VALUES ('305','Boeing 737NG');
+INSERT INTO Plane (pNo,ptName) VALUES ('586','Boeing 737 classic');
+INSERT INTO Plane (pNo,ptName) VALUES ('346','Bombardier CRJ700');
+INSERT INTO Plane (pNo,ptName) VALUES ('297','Boeing 757');
+INSERT INTO Plane (pNo,ptName) VALUES ('231','Bombardier CRJ700');
+INSERT INTO Plane (pNo,ptName) VALUES ('464','Boeing 777');
+INSERT INTO Plane (pNo,ptName) VALUES ('273','Boeing 757');
+INSERT INTO Plane (pNo,ptName) VALUES ('463','Boeing 737NG');
+INSERT INTO Plane (pNo,ptName) VALUES ('552','Airbus A320');
+INSERT INTO Plane (pNo,ptName) VALUES ('327','Boeing 757');
+INSERT INTO Plane (pNo,ptName) VALUES ('685','Airbus A320');
+INSERT INTO Plane (pNo,ptName) VALUES ('444','Bombardier CRJ700');
+INSERT INTO Plane (pNo,ptName) VALUES ('321','Boeing 737NG');
+INSERT INTO Plane (pNo,ptName) VALUES ('757','Boeing 737NG');
+INSERT INTO Plane (pNo,ptName) VALUES ('269','Boeing 757');
+INSERT INTO Plane (pNo,ptName) VALUES ('693','Boeing 777');
+INSERT INTO Plane (pNo,ptName) VALUES ('406','Bombardier CRJ700');
+INSERT INTO Plane (pNo,ptName) VALUES ('584','Boeing 757');
+INSERT INTO Plane (pNo,ptName) VALUES ('708','Boeing 757');
+INSERT INTO Plane (pNo,ptName) VALUES ('310','Boeing 737NG');
+INSERT INTO Plane (pNo,ptName) VALUES ('424','Airbus A320');
+INSERT INTO Plane (pNo,ptName) VALUES ('576','Airbus A320');
+INSERT INTO Plane (pNo,ptName) VALUES ('658','Bombardier CRJ700');
+INSERT INTO Plane (pNo,ptName) VALUES ('324','Airbus A320');
+INSERT INTO Plane (pNo,ptName) VALUES ('404','Airbus A320');
+INSERT INTO Plane (pNo,ptName) VALUES ('673','Boeing 777');
+INSERT INTO Plane (pNo,ptName) VALUES ('637','Boeing 737NG');
+INSERT INTO Plane (pNo,ptName) VALUES ('324','Boeing 777');
+INSERT INTO Plane (pNo,ptName) VALUES ('632','Boeing 737NG');
+INSERT INTO Plane (pNo,ptName) VALUES ('639','Boeing 737 classic');
+INSERT INTO Plane (pNo,ptName) VALUES ('237','Boeing 757');
+INSERT INTO Plane (pNo,ptName) VALUES ('368','Bombardier CRJ700');
+INSERT INTO Plane (pNo,ptName) VALUES ('425','Boeing 757');
+INSERT INTO Plane (pNo,ptName) VALUES ('502','Boeing 737 classic');
+INSERT INTO Plane (pNo,ptName) VALUES ('305','Boeing 757');
+INSERT INTO Plane (pNo,ptName) VALUES ('258','Airbus A320');
+INSERT INTO Plane (pNo,ptName) VALUES ('319','Boeing 737 classic');
+INSERT INTO Plane (pNo,ptName) VALUES ('256','Boeing 737 classic');
+INSERT INTO Plane (pNo,ptName) VALUES ('308','Bombardier CRJ700');
+INSERT INTO Plane (pNo,ptName) VALUES ('711','Bombardier CRJ700');
+INSERT INTO Plane (pNo,ptName) VALUES ('245','Airbus A320');
+INSERT INTO Plane (pNo,ptName) VALUES ('721','Boeing 777');
+INSERT INTO Plane (pNo,ptName) VALUES ('739','Boeing 757');
+INSERT INTO Plane (pNo,ptName) VALUES ('438','Boeing 777');
+INSERT INTO Plane (pNo,ptName) VALUES ('439','Bombardier CRJ700');
+INSERT INTO Plane (pNo,ptName) VALUES ('722','Boeing 737 classic');
+INSERT INTO Plane (pNo,ptName) VALUES ('725','Bombardier CRJ700');
+INSERT INTO Plane (pNo,ptName) VALUES ('446','Boeing 737NG');
+INSERT INTO Plane (pNo,ptName) VALUES ('560','Airbus A320');
+INSERT INTO Plane (pNo,ptName) VALUES ('320','Boeing 757');
+INSERT INTO Plane (pNo,ptName) VALUES ('655','Boeing 737 classic');
+INSERT INTO Plane (pNo,ptName) VALUES ('381','Airbus A320');
+INSERT INTO Plane (pNo,ptName) VALUES ('570','Airbus A320');
+INSERT INTO Plane (pNo,ptName) VALUES ('661','Boeing 757');
+INSERT INTO Plane (pNo,ptName) VALUES ('587','Boeing 757');
+INSERT INTO Plane (pNo,ptName) VALUES ('449','Boeing 777');
+INSERT INTO Plane (pNo,ptName) VALUES ('467','Boeing 757');
+INSERT INTO Plane (pNo,ptName) VALUES ('738','Boeing 777');
+INSERT INTO Plane (pNo,ptName) VALUES ('439','Boeing 757');
+INSERT INTO Plane (pNo,ptName) VALUES ('682','Boeing 737NG');
+INSERT INTO Plane (pNo,ptName) VALUES ('589','Airbus A320');
+INSERT INTO Plane (pNo,ptName) VALUES ('268','Boeing 737NG');
+INSERT INTO Plane (pNo,ptName) VALUES ('654','Boeing 757');
+INSERT INTO Plane (pNo,ptName) VALUES ('484','Boeing 757');
+INSERT INTO Plane (pNo,ptName) VALUES ('563','Boeing 737 classic');
+INSERT INTO Plane (pNo,ptName) VALUES ('391','Boeing 737NG');
+INSERT INTO Plane (pNo,ptName) VALUES ('700','Boeing 737 classic');
+INSERT INTO Plane (pNo,ptName) VALUES ('558','Airbus A320');
+INSERT INTO Plane (pNo,ptName) VALUES ('266','Boeing 737 classic');
+INSERT INTO Plane (pNo,ptName) VALUES ('354','Airbus A320');
+INSERT INTO Plane (pNo,ptName) VALUES ('655','Boeing 737 classic');
+INSERT INTO Plane (pNo,ptName) VALUES ('705','Airbus A320');
+INSERT INTO Plane (pNo,ptName) VALUES ('576','Airbus A320');
+INSERT INTO Plane (pNo,ptName) VALUES ('662','Boeing 737NG');
+INSERT INTO Plane (pNo,ptName) VALUES ('706','Bombardier CRJ700');
+INSERT INTO Plane (pNo,ptName) VALUES ('393','Boeing 737NG');
+INSERT INTO Plane (pNo,ptName) VALUES ('582','Airbus A320');
+INSERT INTO Plane (pNo,ptName) VALUES ('648','Airbus A320');
+INSERT INTO Plane (pNo,ptName) VALUES ('340','Bombardier CRJ700');
+INSERT INTO Plane (pNo,ptName) VALUES ('321','Boeing 737 classic');
+INSERT INTO Plane (pNo,ptName) VALUES ('485','Boeing 757');
+INSERT INTO Plane (pNo,ptName) VALUES ('558','Boeing 757');
+INSERT INTO Plane (pNo,ptName) VALUES ('326','Bombardier CRJ700');
+INSERT INTO Plane (pNo,ptName) VALUES ('590','Airbus A320');
+INSERT INTO Plane (pNo,ptName) VALUES ('376','Boeing 777');
+INSERT INTO Plane (pNo,ptName) VALUES ('384','Boeing 737NG');
+INSERT INTO Plane (pNo,ptName) VALUES ('373','Boeing 737 classic');
+INSERT INTO Plane (pNo,ptName) VALUES ('477','Boeing 737 classic');
+INSERT INTO Plane (pNo,ptName) VALUES ('320','Boeing 777');
+INSERT INTO Plane (pNo,ptName) VALUES ('721','Boeing 737NG');
+INSERT INTO Plane (pNo,ptName) VALUES ('581','Bombardier CRJ700');
+INSERT INTO Plane (pNo,ptName) VALUES ('273','Bombardier CRJ700');
+INSERT INTO Plane (pNo,ptName) VALUES ('227','Boeing 737NG');
+INSERT INTO Plane (pNo,ptName) VALUES ('533','Boeing 737NG');
+INSERT INTO Plane (pNo,ptName) VALUES ('337','Bombardier CRJ700');
+INSERT INTO Plane (pNo,ptName) VALUES ('380','Boeing 777');
+INSERT INTO Plane (pNo,ptName) VALUES ('382','Bombardier CRJ700');
+INSERT INTO Plane (pNo,ptName) VALUES ('283','Boeing 777');
  
 INSERT INTO Flight (flightNo,airline,service,fcost,departureDate,departureTime,arrivalDate,arrivalTime,pNo) VALUES ('38092225','WestJet','full','226',to_date('2016-06-09'),'1336',to_date('2016-06-10'),'1237','227');
 INSERT INTO Flight (flightNo,airline,service,fcost,departureDate,departureTime,arrivalDate,arrivalTime,pNo) VALUES ('64978989','Porter Airlines','full','287',to_date('2016-06-09'),'0740',to_date('2016-06-10'),'1447','228');
@@ -1646,114 +1754,6 @@ INSERT INTO AirportsUsed (origin_aCode,departureDate,departureTime,destination_a
 INSERT INTO AirportsUsed (origin_aCode,departureDate,departureTime,destination_aCode,arrivalDate,arrivalTime) VALUES ('YMR',to_date('2016-06-14'),'0647','YCR',to_date('2016-06-15'),'1718');
 INSERT INTO AirportsUsed (origin_aCode,departureDate,departureTime,destination_aCode,arrivalDate,arrivalTime) VALUES ('YYQ',to_date('2016-06-14'),'1701','YDH',to_date('2016-06-15'),'0724');
 
-INSERT INTO PlaneType (ptName,capacity,wifi,entertainment) VALUES ('Boeing 777','114','paid','TRUE');
-INSERT INTO PlaneType (ptName,capacity,wifi,entertainment) VALUES ('Boeing 757','106','free','TRUE');
-INSERT INTO PlaneType (ptName,capacity,wifi,entertainment) VALUES ('Boeing 737NG','85','paid','TRUE');
-INSERT INTO PlaneType (ptName,capacity,wifi,entertainment) VALUES ('Boeing 737 classic','112','not available','FALSE');
-INSERT INTO PlaneType (ptName,capacity,wifi,entertainment) VALUES ('Bombardier CRJ700','70','not available','FALSE');
-INSERT INTO PlaneType (ptName,capacity,wifi,entertainment) VALUES ('Airbus A320','166','paid','TRUE');
-
-INSERT INTO Plane (pNo,ptName) VALUES ('634','Boeing 777');
-INSERT INTO Plane (pNo,ptName) VALUES ('228','Boeing 737 classic');
-INSERT INTO Plane (pNo,ptName) VALUES ('305','Boeing 737NG');
-INSERT INTO Plane (pNo,ptName) VALUES ('586','Boeing 737 classic');
-INSERT INTO Plane (pNo,ptName) VALUES ('346','Bombardier CRJ700');
-INSERT INTO Plane (pNo,ptName) VALUES ('297','Boeing 757');
-INSERT INTO Plane (pNo,ptName) VALUES ('231','Bombardier CRJ700');
-INSERT INTO Plane (pNo,ptName) VALUES ('464','Boeing 777');
-INSERT INTO Plane (pNo,ptName) VALUES ('273','Boeing 757');
-INSERT INTO Plane (pNo,ptName) VALUES ('463','Boeing 737NG');
-INSERT INTO Plane (pNo,ptName) VALUES ('552','Airbus A320');
-INSERT INTO Plane (pNo,ptName) VALUES ('327','Boeing 757');
-INSERT INTO Plane (pNo,ptName) VALUES ('685','Airbus A320');
-INSERT INTO Plane (pNo,ptName) VALUES ('444','Bombardier CRJ700');
-INSERT INTO Plane (pNo,ptName) VALUES ('321','Boeing 737NG');
-INSERT INTO Plane (pNo,ptName) VALUES ('757','Boeing 737NG');
-INSERT INTO Plane (pNo,ptName) VALUES ('269','Boeing 757');
-INSERT INTO Plane (pNo,ptName) VALUES ('693','Boeing 777');
-INSERT INTO Plane (pNo,ptName) VALUES ('406','Bombardier CRJ700');
-INSERT INTO Plane (pNo,ptName) VALUES ('584','Boeing 757');
-INSERT INTO Plane (pNo,ptName) VALUES ('708','Boeing 757');
-INSERT INTO Plane (pNo,ptName) VALUES ('310','Boeing 737NG');
-INSERT INTO Plane (pNo,ptName) VALUES ('424','Airbus A320');
-INSERT INTO Plane (pNo,ptName) VALUES ('576','Airbus A320');
-INSERT INTO Plane (pNo,ptName) VALUES ('658','Bombardier CRJ700');
-INSERT INTO Plane (pNo,ptName) VALUES ('324','Airbus A320');
-INSERT INTO Plane (pNo,ptName) VALUES ('404','Airbus A320');
-INSERT INTO Plane (pNo,ptName) VALUES ('673','Boeing 777');
-INSERT INTO Plane (pNo,ptName) VALUES ('637','Boeing 737NG');
-INSERT INTO Plane (pNo,ptName) VALUES ('324','Boeing 777');
-INSERT INTO Plane (pNo,ptName) VALUES ('632','Boeing 737NG');
-INSERT INTO Plane (pNo,ptName) VALUES ('639','Boeing 737 classic');
-INSERT INTO Plane (pNo,ptName) VALUES ('237','Boeing 757');
-INSERT INTO Plane (pNo,ptName) VALUES ('368','Bombardier CRJ700');
-INSERT INTO Plane (pNo,ptName) VALUES ('425','Boeing 757');
-INSERT INTO Plane (pNo,ptName) VALUES ('502','Boeing 737 classic');
-INSERT INTO Plane (pNo,ptName) VALUES ('305','Boeing 757');
-INSERT INTO Plane (pNo,ptName) VALUES ('258','Airbus A320');
-INSERT INTO Plane (pNo,ptName) VALUES ('319','Boeing 737 classic');
-INSERT INTO Plane (pNo,ptName) VALUES ('256','Boeing 737 classic');
-INSERT INTO Plane (pNo,ptName) VALUES ('308','Bombardier CRJ700');
-INSERT INTO Plane (pNo,ptName) VALUES ('711','Bombardier CRJ700');
-INSERT INTO Plane (pNo,ptName) VALUES ('245','Airbus A320');
-INSERT INTO Plane (pNo,ptName) VALUES ('721','Boeing 777');
-INSERT INTO Plane (pNo,ptName) VALUES ('739','Boeing 757');
-INSERT INTO Plane (pNo,ptName) VALUES ('438','Boeing 777');
-INSERT INTO Plane (pNo,ptName) VALUES ('439','Bombardier CRJ700');
-INSERT INTO Plane (pNo,ptName) VALUES ('722','Boeing 737 classic');
-INSERT INTO Plane (pNo,ptName) VALUES ('725','Bombardier CRJ700');
-INSERT INTO Plane (pNo,ptName) VALUES ('446','Boeing 737NG');
-INSERT INTO Plane (pNo,ptName) VALUES ('560','Airbus A320');
-INSERT INTO Plane (pNo,ptName) VALUES ('320','Boeing 757');
-INSERT INTO Plane (pNo,ptName) VALUES ('655','Boeing 737 classic');
-INSERT INTO Plane (pNo,ptName) VALUES ('381','Airbus A320');
-INSERT INTO Plane (pNo,ptName) VALUES ('570','Airbus A320');
-INSERT INTO Plane (pNo,ptName) VALUES ('661','Boeing 757');
-INSERT INTO Plane (pNo,ptName) VALUES ('587','Boeing 757');
-INSERT INTO Plane (pNo,ptName) VALUES ('449','Boeing 777');
-INSERT INTO Plane (pNo,ptName) VALUES ('467','Boeing 757');
-INSERT INTO Plane (pNo,ptName) VALUES ('738','Boeing 777');
-INSERT INTO Plane (pNo,ptName) VALUES ('439','Boeing 757');
-INSERT INTO Plane (pNo,ptName) VALUES ('682','Boeing 737NG');
-INSERT INTO Plane (pNo,ptName) VALUES ('589','Airbus A320');
-INSERT INTO Plane (pNo,ptName) VALUES ('268','Boeing 737NG');
-INSERT INTO Plane (pNo,ptName) VALUES ('654','Boeing 757');
-INSERT INTO Plane (pNo,ptName) VALUES ('484','Boeing 757');
-INSERT INTO Plane (pNo,ptName) VALUES ('563','Boeing 737 classic');
-INSERT INTO Plane (pNo,ptName) VALUES ('391','Boeing 737NG');
-INSERT INTO Plane (pNo,ptName) VALUES ('700','Boeing 737 classic');
-INSERT INTO Plane (pNo,ptName) VALUES ('558','Airbus A320');
-INSERT INTO Plane (pNo,ptName) VALUES ('266','Boeing 737 classic');
-INSERT INTO Plane (pNo,ptName) VALUES ('354','Airbus A320');
-INSERT INTO Plane (pNo,ptName) VALUES ('655','Boeing 737 classic');
-INSERT INTO Plane (pNo,ptName) VALUES ('705','Airbus A320');
-INSERT INTO Plane (pNo,ptName) VALUES ('576','Airbus A320');
-INSERT INTO Plane (pNo,ptName) VALUES ('662','Boeing 737NG');
-INSERT INTO Plane (pNo,ptName) VALUES ('706','Bombardier CRJ700');
-INSERT INTO Plane (pNo,ptName) VALUES ('393','Boeing 737NG');
-INSERT INTO Plane (pNo,ptName) VALUES ('582','Airbus A320');
-INSERT INTO Plane (pNo,ptName) VALUES ('648','Airbus A320');
-INSERT INTO Plane (pNo,ptName) VALUES ('340','Bombardier CRJ700');
-INSERT INTO Plane (pNo,ptName) VALUES ('321','Boeing 737 classic');
-INSERT INTO Plane (pNo,ptName) VALUES ('485','Boeing 757');
-INSERT INTO Plane (pNo,ptName) VALUES ('558','Boeing 757');
-INSERT INTO Plane (pNo,ptName) VALUES ('326','Bombardier CRJ700');
-INSERT INTO Plane (pNo,ptName) VALUES ('590','Airbus A320');
-INSERT INTO Plane (pNo,ptName) VALUES ('376','Boeing 777');
-INSERT INTO Plane (pNo,ptName) VALUES ('384','Boeing 737NG');
-INSERT INTO Plane (pNo,ptName) VALUES ('373','Boeing 737 classic');
-INSERT INTO Plane (pNo,ptName) VALUES ('477','Boeing 737 classic');
-INSERT INTO Plane (pNo,ptName) VALUES ('320','Boeing 777');
-INSERT INTO Plane (pNo,ptName) VALUES ('721','Boeing 737NG');
-INSERT INTO Plane (pNo,ptName) VALUES ('581','Bombardier CRJ700');
-INSERT INTO Plane (pNo,ptName) VALUES ('273','Bombardier CRJ700');
-INSERT INTO Plane (pNo,ptName) VALUES ('227','Boeing 737NG');
-INSERT INTO Plane (pNo,ptName) VALUES ('533','Boeing 737NG');
-INSERT INTO Plane (pNo,ptName) VALUES ('337','Bombardier CRJ700');
-INSERT INTO Plane (pNo,ptName) VALUES ('380','Boeing 777');
-INSERT INTO Plane (pNo,ptName) VALUES ('382','Bombardier CRJ700');
-INSERT INTO Plane (pNo,ptName) VALUES ('283','Boeing 777');
-
 INSERT INTO SeatType (stName,availability,legRoom,reclining,stcost) VALUES ('economy','70','FALSE','FALSE','160');
 INSERT INTO SeatType (stName,availability,legRoom,reclining,stcost) VALUES ('economy plus','30','FALSE','TRUE','350');
 INSERT INTO SeatType (stName,availability,legRoom,reclining,stcost) VALUES ('business','20','TRUE','TRUE','900');
@@ -1763,7 +1763,7 @@ INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('63A','first',
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('71T','economy','64978989','TRUE','1296');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('93G','economy','78200044','TRUE','2862');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('06T','business','87123022','FALSE','171');
-INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('03N','business','76925177','TRUE','3521');
+INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('03N','business','38092225','TRUE','3521');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('22Z','business','39814445','TRUE','1291');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('14B','economy plus','92624225','FALSE','3780');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('69K','first','83461634','TRUE','3274');
@@ -1777,7 +1777,7 @@ INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('84T','first',
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('39S','business','18566371','FALSE','3831');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('15Q','first','35858803','FALSE','3427');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('53E','economy','61175899','TRUE','2319');
-INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('08B','business','21095594','FALSE','1571');
+INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('08B','business','18397486','FALSE','1571');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('40M','economy plus','16721384','FALSE','2770');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('21M','economy plus','18610390','TRUE','3659');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('25S','economy','15675327','TRUE','2437');
@@ -1785,8 +1785,8 @@ INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('67N','economy
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('70O','business','21340641','FALSE','3310');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('51V','first','15275684','TRUE','2743');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('80X','economy plus','20601855','FALSE','2295');
-INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('94H','business','73839213','FALSE','1097');
-INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('37J','business','43921571','FALSE','3925');
+INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('94H','business','77699861','FALSE','1097');
+INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('37J','business','38092225','FALSE','3925');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('13Z','economy plus','18397486','TRUE','1028');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('01G','economy plus','45017189','FALSE','747');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('92W','first','13321676','FALSE','1401');
@@ -1798,31 +1798,31 @@ INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('46R','economy
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('55N','business','41646492','TRUE','2587');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('35U','economy plus','37566329','FALSE','225');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('28S','first','55235136','TRUE','2021');
-INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('92H','business','94658502','FALSE','3375');
+INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('92H','business','77699861','FALSE','3375');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('69O','economy plus','62831606','FALSE','2091');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('88B','economy plus','74174737','TRUE','2221');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('96Q','business','63120451','TRUE','1973');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('42J','first','27406839','TRUE','960');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('88B','economy','11366083','TRUE','2862');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('13S','business','62008874','FALSE','2027');
-INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('81V','first','92358456','TRUE','2327');
+INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('81V','first','38092225','TRUE','2327');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('73T','first','77621937','FALSE','3335');
-INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('13M','economy','55027614','FALSE','2863');
+INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('13M','economy','77699861','FALSE','2863');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('91P','economy','51873570','TRUE','1014');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('60T','economy','53883136','FALSE','217');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('55N','economy plus','58216701','TRUE','3744');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('06V','economy','54858097','TRUE','1044');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('92T','first','51414626','FALSE','746');
-INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('40U','economy','53336519','TRUE','684');
+INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('40U','economy','77699861','TRUE','684');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('84F','business','58168051','TRUE','1206');
-INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('84V','economy','58156693','FALSE','1679');
+INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('84V','economy','18397486','FALSE','1679');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('32R','first','54673430','FALSE','1583');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('24J','economy plus','59822884','FALSE','3237');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('25U','first','55902417','TRUE','2809');
-INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('51Y','business','54451205','TRUE','1226');
+INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('51Y','business','38092225','TRUE','1226');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('84C','economy plus','55650324','FALSE','3022');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('93V','first','70594826','FALSE','624');
-INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('60F','economy plus','77506812','TRUE','206');
+INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('60F','economy plus','77699861','TRUE','206');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('68I','business','77590340','FALSE','1255');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('51W','economy plus','71371059','TRUE','3773');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('56Y','business','74379023','TRUE','3028');
@@ -1830,16 +1830,16 @@ INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('47C','economy
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('34H','first','76386242','FALSE','737');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('95I','economy plus','71040568','TRUE','891');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('43X','economy plus','71101325','FALSE','773');
-INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('15B','first','76014083','FALSE','1658');
+INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('15B','first','38092225','FALSE','1658');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('33A','business','77646452','FALSE','2032');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('29V','business','77721205','TRUE','3501');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('16Y','first','74555237','TRUE','1801');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('57V','first','70200565','FALSE','3488');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('84T','first','75446286','FALSE','1250');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('26Q','economy plus','79368559','FALSE','2177');
-INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('78M','first','71916637','FALSE','3512');
+INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('78M','first','77699861','FALSE','3512');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('37T','first','70637982','FALSE','1397');
-INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('49P','economy','78454582','FALSE','1847');
+INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('49P','economy','38092225','FALSE','1847');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('67K','economy plus','71791051','FALSE','2679');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('13Q','first','76705015','FALSE','2551');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('99B','economy plus','75918151','FALSE','1843');
@@ -1851,12 +1851,12 @@ INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('14B','first',
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('61Z','business','79430983','TRUE','910');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('42U','economy plus','71747344','TRUE','1203');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('50X','economy plus','77760051','FALSE','3275');
-INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('16D','first','79459808','FALSE','2904');
+INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('16D','first','77699861','FALSE','2904');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('73C','business','73317530','TRUE','3413');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('14S','economy plus','70272357','FALSE','1960');
-INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('13W','economy plus','70925346','FALSE','1868');
+INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('13W','economy plus','38092225','FALSE','1868');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('07H','business','74410457','TRUE','272');
-INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('95P','economy','77699861','TRUE','2307');
+INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('95P','economy','18397486','TRUE','2307');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('31R','business','72273088','FALSE','3755');
 INSERT INTO Seat (seatNo,stName,flightNo,available,sCost) VALUES ('11P','economy','71419798','TRUE','927');
 

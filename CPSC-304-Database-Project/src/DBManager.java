@@ -20,11 +20,9 @@ public class DBManager {
 		// Passenger p = new Passenger();
 		// System.out.println(p.searchByCity("ToRonto"));
 		Passenger p = new Passenger();
-		p.checkCredentials("GL139320");
-		System.out.println(p.searchByCity("toRontO"));
+		p.checkCredentials("GL139320");;
 		System.out.println(p.searchByAirline("porter airlines"));
-		System.out.println(p.searchByDepartureTime("1336"));
-		System.out.println(p.searchBySeatType("74379023"));
+		System.out.println(p.checkSeatAvailabilities("38092225"));
 		//e.changeSeatType("14S","07H");
 		//e.cancelTicket(13287754);
 		//p.addMember("cr123", "cr123@gmail.com", "UG381918");
@@ -38,7 +36,7 @@ public class DBManager {
 			DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
 			c = DriverManager.getConnection(
 					"jdbc:oracle:thin:@localhost.ugrad.cs.ubc.ca:1522:ug",
-					"ora_n1y8", "a53693123");
+					"ora_x5v8", "a39245121");
 			s = c.createStatement();
 		} catch (SQLException e) {
 			e.printStackTrace();
