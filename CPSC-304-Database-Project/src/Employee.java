@@ -34,17 +34,18 @@ public class Employee {
 			while (rs1.next()) {
 				rs1.getString("available");
 				updatedSeatType = rs1.getString("stName");
+				System.out.println(updatedSeatType);
+				dbm.iud("update seat set available = 'FALSE' where seatNo = '" + seatNo
+						+ "'");
+				dbm.iud("update seat set available = 'TRUE' where seatNo = '" + oriSN
+						+ "'");
+				System.out.println("Seat " + oriSN + " has been updated to "
+						+ updatedSeatType + ", " + seatNo + ".");
 			}
 		} catch (SQLException e) {
 			System.out.println("Failed to change seat type.");
 			e.printStackTrace();
 		}
-		dbm.iud("update seat set available = 'FALSE' where seatNo = '" + seatNo
-				+ "'");
-		dbm.iud("update seat set available = 'TRUE' where seatNo = '" + oriSN
-				+ "'");
-		System.out.println("Seat " + oriSN + " has been updated to "
-				+ updatedSeatType + ", " + seatNo + ".");
 		dbm.disconnect();
 	}
 

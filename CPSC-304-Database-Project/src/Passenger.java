@@ -154,7 +154,6 @@ public class Passenger {
 		try {
 			while (rs1.next()) {
 				newtID = rs1.getInt(1);
-				System.out.println(newtID);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -169,6 +168,7 @@ public class Passenger {
 				+ "' union all select flightNo,scost as fcost from seat where seatNo = '"
 				+ seatNo + "')) where tID =" + newtID);
 		dbm.disconnect();
+		System.out.println(newtID);
 		return newtID;
 	}
 
