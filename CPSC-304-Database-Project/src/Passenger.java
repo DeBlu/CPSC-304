@@ -16,8 +16,7 @@ public class Passenger {
 		dbm = new DBManager();
 	}
 
-	public boolean addMember(String userid, String email, String passportNo,
-			int points) {
+	public boolean addMember(String userid, String email, String passportNo) {
 		dbm.connect();
 		ResultSet rs = dbm
 				.fetch("select count(*) from passenger where passportNo = '"

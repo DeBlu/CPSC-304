@@ -27,7 +27,7 @@ public class DBManager {
 		System.out.println(p.searchBySeatType("74379023"));
 		//e.changeSeatType("14S","07H");
 		//e.cancelTicket(13287754);
-		//p.addMember("cr123", "cr123@gmail.com", "UG381918", 0);
+		//p.addMember("cr123", "cr123@gmail.com", "UG381918");
 		//p.deleteAccount("cr123", "cr123@gmail.com", "UG381918");
 		//p.changePersonalInformation("UG381918", "cr124@gmail.com", "cr1234");
 		//p.purchaseTicket("nuss", "breaks", "07H", "38092225", "AB149865");
