@@ -29,6 +29,7 @@ import javafx.stage.Stage;
  */
 public class Main extends Application {
 	Passenger p = new Passenger();
+	Employee emp = new Employee();
     Button btnSearch, btnMyTick, btnReg, btnPassTick, btnMemTick, btnCreate,
             btnSFMM, btnMTMM, btnRegMM, btnTPMM,btnCIMM,btnCTMM, btnDAMM,btnCSMM, 
             btnSearchFlight, btnSortAirline, btnSortPrice, btnSortDate,btnBusiness,
@@ -75,16 +76,16 @@ public class Main extends Application {
         btnSearch = new Button("Search Flights");
         btnSearch.setOnAction(e -> changeScene(e));
         mmGrid.add(btnSearch, 0, 2);
-        
+        /*
         //My Tickets button
         btnMyTick = new Button("My Tickets");
         btnMyTick.setOnAction(e -> changeScene(e));
-        mmGrid.add(btnMyTick, 1, 2);
-        
+        mmGrid.add(btnMyTick, 2, 2);
+        */
         //Register button
         btnReg = new Button("Register");
         btnReg.setOnAction(e -> changeScene(e));
-        mmGrid.add(btnReg, 2, 2);
+        mmGrid.add(btnReg, 1, 2);
         
         //Change Info button
         btnCI = new Button("Change Info");
@@ -219,6 +220,7 @@ public class Main extends Application {
                 tpLNameField, tpFnoField,tpSeatField));
         tpGrid.add(btnTPPass, 1, 7);
         
+        /*
         //User Name Field
         Label tpUserName = new Label ("User Name:");
         tpGrid.add(tpUserName, 0, 8);
@@ -250,11 +252,14 @@ public class Main extends Application {
                 tpSeatMemField));
         tpGrid.add(btnTPMem, 1, 12);
         
+        */
+        
         //Cancel button; return to Main Menu
         btnTPMM = new Button("Main Menu");
         btnTPMM.setOnAction(e -> changeScene(e));
         tpGrid.add(btnTPMM, 4, 0);
         
+        /*
         //MY TICKETS
         
         //My Tickets grid
@@ -357,6 +362,7 @@ public class Main extends Application {
         btnCIMM.setOnAction(e -> changeScene(e));
         ciGrid.add(btnCIMM, 4, 0);
         
+        */
         //REGISTER
        
         
@@ -510,8 +516,8 @@ public class Main extends Application {
         mmScene = new Scene(mmGrid, 450, 320);
         sfScene = new Scene(sfGrid, 450, 320);
         tpScene = new Scene (tpGrid, 450, 500);
-        mtScene = new Scene(mtGrid, 450, 320);
-        ciScene = new Scene (ciGrid, 450, 320);
+        //mtScene = new Scene(mtGrid, 450, 320);
+        //ciScene = new Scene (ciGrid, 450, 320);
         regScene = new Scene(regGrid, 450, 320);
         csScene = new Scene (csGrid, 450, 320);
         ctScene = new Scene (ctGrid, 450, 320);
@@ -547,9 +553,7 @@ public class Main extends Application {
                 ||e.getSource()==btnTPMM||e.getSource()==btnRegMM||e.getSource()==btnCIMM)
             thestage.setScene(mmScene);
     }
- public void Register( ActionEvent e, TextField userNameField, TextField userEmail, TextField userPassport) {
-        //TODO Verify Name and Password, then create DB entry
-        
+ public void Register( ActionEvent e, TextField userNameField, TextField userEmail, TextField userPassport) {          
         String uName = userNameField.getText();
         String uEmail = userEmail.getText();
         String uPass = userPassport.getText();
@@ -558,24 +562,29 @@ public class Main extends Application {
         p.addMember(uName, uEmail, uPass);
     
     }
+ /*
  public void findTicks( ActionEvent e, TextField passNumField, TextField userNameField, TextField userPassport){
         //TODO Find tickets passed on Passport or Member login
         
         if (e.getSource()==btnPassTick) {
             //TODO find tickets associated with passport
             String mtPass = passNumField.getText();
-  
+           
+            
         } else {
             //TODO verify login, and then find tickets associated with member
             String mtName = userNameField.getText();
             String mtPassNum = userPassport.getText();
         }
  }       
+ */
  public void searchFlight( ActionEvent e, TextField originField, TextField destField, TextField dateField) {
      //TODO     
      String fOrigin = originField.getText();
      String fDest = destField.getText();
      String fDate = dateField.getText();
+     
+     p.searchMain(fOrigin, fDest, fDate);
      
      
  }     
@@ -589,10 +598,9 @@ public class Main extends Application {
             String lName = lNameField.getText();
             String fNo = fNoField.getText();
             String seatNo = seatNoField.getText();
-        
-        
+        p.purchaseTicket(fName, lName, seatNo, fNo, passNum);
  }     
-
+/*
  public void buyTicketMem( ActionEvent e, TextField userNameField, TextField userPassport,
          TextField fNoField, TextField seatNoField){
                   
@@ -600,9 +608,10 @@ public class Main extends Application {
             String uPass = userPassport.getText();
             String fNoMem = fNoField.getText();
             String seatNoMem = seatNoField.getText();
-        
-        
- }     
+            
+     
+ }  
+  */
   
   public void updateInfo (ActionEvent e, TextField passNumField, TextField userNameField, TextField userEmailField) {
       //TODO update Info
@@ -616,18 +625,19 @@ public class Main extends Application {
   public void changeSeat (ActionEvent e, TextField oldSeat, TextField newSeat) {
       String oSeat = oldSeat.getText();
       String nSeat = newSeat.getText();
-      
+      emp.changeSeatType(nSeat,oSeat);
   }
   
    public void cancelTicket (ActionEvent e, TextField cancelNum) {
       int tickNum = parseInt(cancelNum.getText());
-      
+      emp.cancelTicket(tickNum);
   }
    
    public void deleteAccount (ActionEvent e, TextField daNameField, TextField daEmailField, TextField daPassport) {      
       String daName = daNameField.getText();
       String daEmail = daEmailField.getText();
       String daPass = daPassport.getText();
+      p.deleteAccount(daName, daEmail, daPass);
   }
   
 
