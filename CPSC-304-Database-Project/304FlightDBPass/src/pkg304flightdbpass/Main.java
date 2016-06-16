@@ -528,6 +528,13 @@ public class Main extends Application {
     }
  public void Register( ActionEvent e, TextField userNameField, TextField userEmail, TextField userPassport) {
         //TODO Verify Name and Password, then create DB entry
+        
+        String uName = userNameField.getText();
+        String uEmail = userEmail.getText();
+        String uPass = userPassport.getText();
+        
+        p.checkCredentials(uPass);
+        p.addMember(uName, uEmail, uPass);
     
     }
  public void findTicks( ActionEvent e, TextField passNumField, TextField userNameField, TextField userPassport){
