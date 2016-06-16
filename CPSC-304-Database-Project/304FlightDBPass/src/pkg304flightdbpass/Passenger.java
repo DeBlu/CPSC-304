@@ -10,6 +10,9 @@ import java.util.HashMap;
 
 import com.sun.rowset.internal.Row;
 
+import javafx.collections.ObservableList;
+import javafx.scene.control.TableView;
+
 public class Passenger {
 
 	DBManager dbm;
@@ -17,7 +20,9 @@ public class Passenger {
 	public Passenger() {
 		dbm = new DBManager();
 	}
-
+	public ObservableList<ObservableList> data;
+	public TableView flightTable;
+	
 	public boolean addMember(String userid, String email, String passportNo) {
 		dbm.connect();
 		ResultSet rs = dbm
@@ -221,13 +226,13 @@ public class Passenger {
 		return flightNo;
 	}
 
-	public ArrayList<HashMap<String, Object>> searchByFlightNo(int flightNo) {
+	public HashMap<String, Object> searchByFlightNo(String string) {
 		dbm.connect();
 
-		ArrayList<HashMap<String, Object>> rows = new ArrayList<HashMap<String, Object>>();
+		HashMap<String, Object> flight = new HashMap<String, Object>();
 
 		ResultSet rs = dbm.fetch("select * from flight where flightNo = '"
-				+ flightNo + "'");
+				+ string + "'");
 
 		try {
 			while (rs.next()) {
@@ -239,19 +244,17 @@ public class Passenger {
 					columns.add(rsmd.getColumnName(i + 1));
 				}
 
-				HashMap<String, Object> row = new HashMap<String, Object>();
 				for (String colName : columns) {
 					Object value = rs.getObject(colName);
-					row.put(colName, value);
+					flight.put(colName, value);
 				}
-				rows.add(row);
 			}
 		} catch (SQLException e) {
 			System.out.println("The flight does not exist.");
 			e.printStackTrace();
 		}
 		dbm.disconnect();
-		return rows;
+		return flight;
 	}
 
 	public ArrayList<HashMap<String, Object>> searchByAirport(String aCode) {
@@ -490,7 +493,7 @@ public class Passenger {
 				}
 			}
 		} catch (SQLException e) {
-			System.out.println("Invalid date.");
+			System.out.println("Invalid flight.");
 			e.printStackTrace();
 		}
 		dbm.disconnect();
@@ -563,4 +566,22 @@ public class Passenger {
 		dbm.disconnect();
 		return rows;
 	}
+	
+	public String searchByAirportsUsed(String deptDate, String arrivalDate, String arrivalTime, String deptTime) {
+		dbm.connect();
+		String flightNo = null;
+		ResultSet rs = dbm
+				.fetch("select flightNo from Flight where departureDate = to_date('" + deptDate + "', 'YY-MM-DD') and arrivalDate = to_date('" + arrivalDate + "', 'YY-MM-DD') and arrivalTime = '" + arrivalTime + "' and departureTime = '" + deptTime + "'");
+		try {
+			while (rs.next()) {
+				flightNo = rs.getString(1);
+			}
+		} catch (SQLException e) {
+			System.out.println("Invalid data.");
+			e.printStackTrace();
+		}
+		dbm.disconnect();
+		return flightNo;		
+	}
+	
 }

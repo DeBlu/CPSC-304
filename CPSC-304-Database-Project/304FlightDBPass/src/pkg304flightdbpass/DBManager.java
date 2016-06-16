@@ -18,9 +18,10 @@ public class DBManager {
 	public DBManager() {
 	};
 
-//	public static void main(String[] args) throws SQLException {
-	// Passenger p = new Passenger();
-	// System.out.println(p.searchByCity("ToRonto"));
+	public static void main(String[] args) throws SQLException {
+	 Passenger p = new Passenger();
+	 
+	 System.out.println(p.searchByAirportsUsed("2016-06-09","1336","2016-06-10","1237"));
 	//Passenger p = new Passenger();
 	//Employee e = new Employee();
 	//System.out.println(p.searchByAirline("porter airlines"));
@@ -34,7 +35,7 @@ public class DBManager {
 	// p.purchaseTicket("nuss", "breaks", "07H", "38092225", "AB149865");
 	// e.changeSeatType("42U","50X");
 	// e.cancelTicket(13287754);
-//	}
+	}
 
 	public void connect() {
 		try {

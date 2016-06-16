@@ -5,7 +5,15 @@
  */
 package pkg304flightdbpass;
 
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import javafx.application.Application;
+import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -13,7 +21,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
@@ -21,6 +33,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 /**
  *
@@ -37,7 +50,11 @@ public class Main extends Application {
     Stage thestage;
     PasswordField userPassField;
     TextField userNameField, passNumField, originField, destField, dateField;
+    ArrayList<HashMap<String, Object>> flightResult;
 
+    private TableView flightTable = new TableView();
+    private final ObservableList<Flight> data = FXCollections.observableArrayList();
+    
     @Override
     public void start(Stage primaryStage) {
 
@@ -111,6 +128,7 @@ public class Main extends Application {
         Label fDate = new Label("Date:");
         sfGrid.add(fDate, 0, 4);
         dateField = new TextField();
+        dateField.setPromptText("YYYY-MM-DD");
         sfGrid.add(dateField, 1, 4);
         
         //Find Flights Button
@@ -132,6 +150,7 @@ public class Main extends Application {
         srGrid.setHgap(10);
         srGrid.setVgap(10);
         srGrid.setPadding(new Insets(25, 25, 25, 25));
+        srGrid.add(flightTable, 0, 4);
         
         //Search Result Header
         Text srTitle = new Text("Search Flight");
@@ -435,44 +454,111 @@ public class Main extends Application {
     	 alert.setHeaderText(null);
     	 alert.setContentText("Please input an origin!");
     	 alert.showAndWait();
+     } else {   
+    	 if (destField.getText() ==  null || destField.getText().trim().isEmpty()) {
+    		 Alert alert = new Alert(AlertType.INFORMATION);
+    		 alert.setTitle("Input an origin.");
+    		 alert.setHeaderText(null);
+    		 alert.setContentText("Please input a destination!");
+    		 alert.showAndWait();
+    	 } else {
+    	 	     if (dateField.getText() ==  null || dateField.getText().trim().isEmpty()) {
+    	 	    	 Alert alert = new Alert(AlertType.INFORMATION);
+    	 	    	 alert.setTitle("Input an origin.");
+    	 	    	 alert.setHeaderText(null);
+    	 	    	 alert.setContentText("Please input an travel date!");
+    	 	    	 alert.showAndWait();		
+    	 	} else {  
+    	 		ArrayList<HashMap<String,Object>> result = p.searchMain(originField.toString(), destField.toString(), dateField.toString());
+    	 		System.out.print(result);
+    	 		for (int i = 0; i < result.size(); i++) {
+    	 			HashMap<String,Object> row = result.get(i);
+    	 			String deptDate = (String) row.get("DEPARTUREDATE");
+    	 			System.out.println(deptDate);
+    	 			String arrivalDate = (String) row.get("ARRIVALDATE");
+    	 			System.out.println(arrivalDate);
+    	 			String arrivalTime = (String) row.get("ARRIVALTIME");
+    	 			System.out.println(arrivalTime);
+    	 			String deptTime = (String) row.get("DEPARTURETIME");
+    	 			String dest = (String) row.get("DESTINATION_ACODE");
+    	 			String origin = (String) row.get("ORIGIN_ACODE");
+    	 			p.searchByDepartureDate(dateField.toString());
+    	 			String flightNo = p.searchByAirportsUsed(deptDate,arrivalDate,arrivalTime,deptTime);
+    	 			HashMap<String,Object> result2 = p.searchByFlightNo(flightNo);
+    	 			String airline = (String) result2.get("AIRLINE");
+    	 			Flight temp = new Flight(flightNo, origin, dest, airline, deptDate, deptTime, arrivalDate, arrivalTime);
+    	 			
+    	 			data.addAll(temp);
+    	 		}
+    	 		
+    	 		TableColumn flightNo = new TableColumn("Flight Number");
+    	 		flightNo.setCellValueFactory(
+    	 				new PropertyValueFactory<Flight, String>("Flight Number")
+    	 		);
+    	 		
+    	 		TableColumn origin = new TableColumn("Origin");
+    	 		origin.setCellValueFactory(
+    	 				new PropertyValueFactory<Flight, String>("Origin")
+    	 		);
+    	 		
+    	 		TableColumn destination = new TableColumn("Destination");
+    	 		destination.setCellValueFactory(
+    	 				new PropertyValueFactory<Flight, String>("Destination")
+    	 		);
+    	 		
+    	 		TableColumn deptDate = new TableColumn("Departure Date");
+    	 		deptDate.setCellValueFactory(
+    	 				new PropertyValueFactory<Flight, String>("Departure Date")
+    	 		);
+    	 		TableColumn arrivalDate = new TableColumn("Arrival Date");
+    	 		arrivalDate.setCellValueFactory(
+    	 				new PropertyValueFactory<Flight, String>("Arrival Date")
+    	 		);
+    	 		TableColumn deptTime = new TableColumn("Departure Time");
+    	 		deptTime.setCellValueFactory(
+    	 				new PropertyValueFactory<Flight, String>("Departure Time")
+    	 		);
+    	 		TableColumn arrivalTime = new TableColumn("Arrival Time");
+    	 		arrivalTime.setCellValueFactory(
+    	 				new PropertyValueFactory<Flight, String>("Arrival Time")
+    	 		);
+    	 		TableColumn airline = new TableColumn("Airline");
+    	 		airline.setCellValueFactory(
+    	 				new PropertyValueFactory<Flight, String>("Airline")
+    	 		);
+
+    	 		flightTable.setItems(data);
+    	 		flightTable.getColumns().addAll(flightNo, origin, destination, deptDate, deptTime, arrivalDate, arrivalTime, airline);	
+    	 	
+    	 	}
+    	 }
      }
-     
-     if (destField.getText() ==  null || destField.getText().trim().isEmpty()) {
-    	 Alert alert = new Alert(AlertType.INFORMATION);
-    	 alert.setTitle("Input an origin.");
-    	 alert.setHeaderText(null);
-    	 alert.setContentText("Please input an origin!");
-    	 alert.showAndWait();
-     }
-     
-     if (dateField.getText() ==  null || dateField.getText().trim().isEmpty()) {
-    	 Alert alert = new Alert(AlertType.INFORMATION);
-    	 alert.setTitle("Input an origin.");
-    	 alert.setHeaderText(null);
-    	 alert.setContentText("Please input an origin!");
-    	 alert.showAndWait();
-     }
-     
-     p.searchMain(originField.getText(), destField.getText(), dateField.getText());
-     
      thestage.setScene(srScene);
+     thestage.show();
  }     
  
  public void Sort (ActionEvent e){
+	 System.out.println(flightResult);
+	 // need input values
+	 boolean isMin = true;
      if (e.getSource()==btnSortAirline){
          //TODO Sort by Airline
      } else if (e.getSource()==btnSortPrice){
          //TODO Sort by Price
+    	 if (isMin) {
+    		 p.searchByMinPrice();
+    	 } else {
+    		 p.searchByMaxPrice();
+    	 }
      } else {
          //TODO Sort by Date
+         thestage.setScene(srScene);
      }
-     thestage.setScene(srScene);
  }
  
  public void selectFlight (ActionEvent e){
-     //TODO Select the indicated flight, and return seat info
-	 
-     
+	 // need input vals
+     //TODO Select the indicated flight, and return seat info     
      thestage.setScene(fiScene);
  }
  

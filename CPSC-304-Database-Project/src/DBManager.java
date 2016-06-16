@@ -21,6 +21,7 @@ public class DBManager {
 		// System.out.println(p.searchByCity("ToRonto"));
 		Passenger p = new Passenger();
 		Employee e = new Employee();
+		System.out.println(p.searchByFlightNo("38092225"));
 		//System.out.println(p.searchByAirline("porter airlines"));
 		//System.out.println(p.checkSeatAvailabilities("38092225"));
 		//System.out.println(p.searchBySeatNo("63A", "38092225"));

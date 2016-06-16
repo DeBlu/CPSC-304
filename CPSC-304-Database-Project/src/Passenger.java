@@ -219,13 +219,13 @@ public class Passenger {
 		return flightNo;
 	}
 
-	public ArrayList<HashMap<String, Object>> searchByFlightNo(int flightNo) {
+	public HashMap<String, Object> searchByFlightNo(String string) {
 		dbm.connect();
 
-		ArrayList<HashMap<String, Object>> rows = new ArrayList<HashMap<String, Object>>();
+		HashMap<String, Object> flight = new HashMap<String, Object>();
 
 		ResultSet rs = dbm.fetch("select * from flight where flightNo = '"
-				+ flightNo + "'");
+				+ string + "'");
 
 		try {
 			while (rs.next()) {
@@ -237,19 +237,17 @@ public class Passenger {
 					columns.add(rsmd.getColumnName(i + 1));
 				}
 
-				HashMap<String, Object> row = new HashMap<String, Object>();
 				for (String colName : columns) {
 					Object value = rs.getObject(colName);
-					row.put(colName, value);
+					flight.put(colName, value);
 				}
-				rows.add(row);
 			}
 		} catch (SQLException e) {
 			System.out.println("The flight does not exist.");
 			e.printStackTrace();
 		}
 		dbm.disconnect();
-		return rows;
+		return flight;
 	}
 
 	public ArrayList<HashMap<String, Object>> searchByAirport(String aCode) {
@@ -537,5 +535,27 @@ public class Passenger {
 		}
 		dbm.disconnect();
 		return rows;
+	}
+	
+	public ArrayList<String> searchByAirportsUsed(String deptDate, String arrivalDate, String arrivalTime, String deptTime) {
+		dbm.connect();
+		ArrayList<String> flightNos = new ArrayList<String>();
+		ResultSet rs = dbm
+				.fetch("select flightNo from Flight where departureDate = to_date('" + deptDate + "', 'YY-MM-DD') and arrivalDate = to_date('" + arrivalDate + "', 'YY-MM-DD') and arrivalTime = '" + arrivalTime + "' and departureTime = '" + deptTime + "'");
+		try {
+			while (rs.next()) {
+				ResultSetMetaData metadata = rs.getMetaData();
+				int numCols = metadata.getColumnCount();
+
+				for (int i = 0; i < numCols; i++) {
+					flightNos.add(rs.getString(i + 1));
+				}
+			}
+		} catch (SQLException e) {
+			System.out.println("Invalid data.");
+			e.printStackTrace();
+		}
+		dbm.disconnect();
+		return flightNos;		
 	}
 }
