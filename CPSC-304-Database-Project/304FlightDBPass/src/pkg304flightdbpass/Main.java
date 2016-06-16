@@ -696,6 +696,7 @@ public class Main extends Application {
   
   public void updateInfo (ActionEvent e, TextField passNumField, TextField userNameField, TextField userEmailField) {
       //TODO update Info
+	  p.changePersonalInformation(passNumField, userEmailField, userNameField)
   }
 
   
