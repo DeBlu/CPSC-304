@@ -35,9 +35,9 @@ public class Main extends Application {
             btnSearchFlight, btnSortAirline, btnSortPrice, btnSortDate,btnBusiness,
             btnFirst, btnEcon,btnEconPlus,btnBuy, btnTPPass, btnTPMem, btnMoreInfo,
             btnMTRMM, btnChangeInfo, btnUpdateInfo, btnCI, btnCT, btnCS, btnDA, btnTP,
-            btnChange, btnCancel, btnDelete;
+            btnChange, btnCancel, btnDelete, btnFS, btnFSMM, btnFindSeat;
     Scene mmScene, sfScene, srScene,  mtScene, regScene, fiScene, ssScene, tpScene, mtrScene, ciScene,
-            csScene, ctScene, daScene;
+            csScene, ctScene, daScene, fsScene;
     GridPane srGrid, fiGrid, ssGrid;
     Stage thestage;
     PasswordField userPassField;
@@ -46,7 +46,8 @@ public class Main extends Application {
             ciPassField, ciEmailField, ciNameField, regNameField, regEmailField,
             regPassport, originField, destField, dateField, oldSeat, 
             newSeat, cancelNum, daNameField, daPassport, daEmailField, tpFNameField,
-            tpLNameField, tpFnoField, tpSeatField, tpFnoMemField, tpSeatMemField;
+            tpLNameField, tpFnoField, tpSeatField, tpFnoMemField, tpSeatMemField,
+            fsFnoField;
     
     @Override
     public void start(Stage primaryStage) {
@@ -82,10 +83,16 @@ public class Main extends Application {
         btnMyTick.setOnAction(e -> changeScene(e));
         mmGrid.add(btnMyTick, 2, 2);
         */
+        
+        //Search Seats button
+        btnFS = new Button("Find Seat");
+        btnFS.setOnAction(e -> changeScene(e));
+        mmGrid.add(btnFS, 1, 2);
+        
         //Register button
         btnReg = new Button("Register");
         btnReg.setOnAction(e -> changeScene(e));
-        mmGrid.add(btnReg, 1, 2);
+        mmGrid.add(btnReg, 2, 2);
         
         //Change Info button
         btnCI = new Button("Change Info");
@@ -405,6 +412,35 @@ public class Main extends Application {
         btnRegMM.setOnAction(e -> changeScene(e));
         regGrid.add(btnRegMM, 7, 0);
         
+        //FIND SEAT
+                
+        //Find Seat grid
+        GridPane fsGrid = new GridPane();
+        fsGrid.setAlignment(Pos.CENTER);
+        fsGrid.setHgap(10);
+        fsGrid.setVgap(10);
+        fsGrid.setPadding(new Insets(25, 25, 25, 25));
+        
+        Text fsTitle = new Text("Find Seat");
+        fsTitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        fsGrid.add(fsTitle, 0, 0, 2, 1);
+
+        //Original Seat Number
+        Label fsFNo = new Label("Flight #:");
+        fsGrid.add(fsFNo, 0, 1);
+        fsFnoField= new TextField();
+        fsGrid.add(fsFnoField, 1, 1);
+        
+        //Find Seat Button
+        btnFindSeat = new Button("Find Seat");
+        btnFindSeat.setOnAction(e -> findSeat(e, fsFnoField));
+        fsGrid.add(btnFindSeat, 1, 2);
+        
+        //Cancel button; return to Main Menu
+        btnFSMM = new Button("Main Menu");
+        btnFSMM.setOnAction(e -> changeScene(e));
+        fsGrid.add(btnFSMM, 7, 0);
+        
         //CHANGE SEAT
                 
         //Change Seat grid
@@ -522,6 +558,7 @@ public class Main extends Application {
         csScene = new Scene (csGrid, 450, 320);
         ctScene = new Scene (ctGrid, 450, 320);
         daScene = new Scene (daGrid, 450, 320);
+        fsScene = new Scene (fsGrid, 450, 320);
  
         
         
@@ -548,9 +585,12 @@ public class Main extends Application {
             thestage.setScene(daScene);
         if (e.getSource()==btnTP)
             thestage.setScene(tpScene);
+        if (e.getSource()==btnFS)
+            thestage.setScene(fsScene);
         if (e.getSource()==btnSFMM||e.getSource()==btnMTMM||e.getSource()==btnRegMM
                 ||e.getSource()==btnDAMM||e.getSource()==btnCSMM||e.getSource()==btnCTMM
-                ||e.getSource()==btnTPMM||e.getSource()==btnRegMM||e.getSource()==btnCIMM)
+                ||e.getSource()==btnTPMM||e.getSource()==btnRegMM||e.getSource()==btnCIMM
+                ||e.getSource()==btnFSMM)
             thestage.setScene(mmScene);
     }
  public void Register( ActionEvent e, TextField userNameField, TextField userEmail, TextField userPassport) {          
@@ -588,6 +628,14 @@ public class Main extends Application {
      
      
  }     
+ 
+  public void findSeat( ActionEvent e, TextField fsFNoField) {
+     //TODO     
+     String fsFno = fsFNoField.getText();
+     p.checkSeatAvailabilities(fsFno);
+     
+     
+ }   
  
   
   public void buyTicket( ActionEvent e, TextField passNumField, TextField fNameField, TextField lNameField,
