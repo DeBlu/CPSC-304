@@ -79,12 +79,14 @@ public class Passenger {
 		} catch (SQLException e) {
 			System.out.println("Passenger does not exist in the DB.");
 			e.printStackTrace();
-		}JOptionPane.showMessageDialog(null, "Passenger does not exist in the DB.");
+			JOptionPane.showMessageDialog(null, "Passenger does not exist in the DB.");
+		}
 		if (count == 0) {
 			System.out.println("Failed to update your personal information.");
+			JOptionPane.showMessageDialog(null, "The user does not exist.");
 		} else {
-		dbm.iud("update member set " + "email ='" + nEmail + "'"
-				+ ", userid ='" + nUserid + "'" + " where passportNo ='"
+		dbm.iud("update member set email ='" + nEmail + "'"
+				+ "and userid ='" + nUserid + "'" + " where passportNo ='"
 				+ passportNo + "'");
 		System.out.println("Your personal account has been updated.");
 		JOptionPane.showMessageDialog(null, "Your personal account has been updated.");

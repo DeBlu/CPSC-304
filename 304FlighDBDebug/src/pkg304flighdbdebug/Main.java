@@ -369,7 +369,7 @@ public class Main extends Application {
         ciGrid.add(ciNameField, 1, 4);
 
         //Email Field
-        Label ciEmail = new Label("Passport #:");
+        Label ciEmail = new Label("Email:");
         ciGrid.add(ciEmail, 0, 5);
         ciEmailField = new TextField();
         ciGrid.add(ciEmailField, 1, 5);
