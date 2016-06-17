@@ -1,6 +1,7 @@
 package pkg304flighdbdebug;
-
 import java.sql.*;
+
+import javax.swing.JOptionPane;
 
 public class Employee {
 
@@ -24,8 +25,11 @@ public class Employee {
 			e.printStackTrace();
 		}
 		System.out.println("Seat Number exist but already occupied: " + checkExist);
+		JOptionPane.showMessageDialog(null, "Seat Number exist.");
 		if (checkExist == 0) {
 			System.out.println("seat " + seatNo
+					+ "does not exist in the database.");
+			JOptionPane.showMessageDialog(null, "seat " + seatNo
 					+ "does not exist in the database.");
 		}
 		ResultSet rs1 = dbm
@@ -43,9 +47,12 @@ public class Employee {
 						+ "'");
 				System.out.println("Seat " + oriSN + " has been updated to "
 						+ updatedSeatType + ", " + seatNo + ".");
+				JOptionPane.showMessageDialog(null, "Seat " + oriSN + " has been updated to "
+						+ updatedSeatType + ", " + seatNo + ".");
 			}
 		} catch (SQLException e) {
 			System.out.println("Failed to change seat type.");
+			JOptionPane.showMessageDialog(null, "Failed to change seat type.");
 			e.printStackTrace();
 		}
 		dbm.disconnect();
@@ -58,9 +65,11 @@ public class Employee {
 		count += 1;
 		if (count != 1) {
 			System.out.println("Failed to cancel Ticket:" + tID);
+			JOptionPane.showMessageDialog(null, "Failed to cancel Ticket:" + tID);
 			return;
 		}
 		System.out.println("Ticket: " + tID + " has been cancelled.");
+		JOptionPane.showMessageDialog(null, "Ticket: " + tID + " has been cancelled.");
 		dbm.disconnect();
 	}
 

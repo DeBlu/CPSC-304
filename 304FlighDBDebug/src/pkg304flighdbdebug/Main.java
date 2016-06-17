@@ -10,9 +10,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -593,7 +596,7 @@ public class Main extends Application {
                 ||e.getSource()==btnFSMM)
             thestage.setScene(mmScene);
     }
- public void Register( ActionEvent e, TextField userNameField, TextField userEmail, TextField userPassport) {          
+ 	public void Register( ActionEvent e, TextField userNameField, TextField userEmail, TextField userPassport) {          
         String uName = userNameField.getText();
         String uEmail = userEmail.getText();
         String uPass = userPassport.getText();
@@ -618,23 +621,86 @@ public class Main extends Application {
         }
  }       
  */
- public void searchFlight( ActionEvent e, TextField originField, TextField destField, TextField dateField) {
-     //TODO     
-     String fOrigin = originField.getText();
-     String fDest = destField.getText();
-     String fDate = dateField.getText();
+
+ 	public void searchFlight( ActionEvent e, TextField originField, TextField destField, TextField dateField) {
      
-     p.searchMain(fOrigin, fDest, fDate);
-     
-     
- }     
+     if (originField.getText() ==  null || originField.getText().trim().isEmpty()) {
+    	 Alert alert = new Alert(AlertType.INFORMATION);
+    	 alert.setTitle("Input an origin.");
+    	 alert.setHeaderText(null);
+    	 alert.setContentText("Please input an origin!");
+    	 alert.showAndWait();
+     } else {   
+    	 if (destField.getText() ==  null || destField.getText().trim().isEmpty()) {
+    		 Alert alert = new Alert(AlertType.INFORMATION);
+    		 alert.setTitle("Input an origin.");
+    		 alert.setHeaderText(null);
+    		 alert.setContentText("Please input a destination!");
+    		 alert.showAndWait();
+    	 } else {
+    	 	     if (dateField.getText() ==  null || dateField.getText().trim().isEmpty()) {
+    	 	    	 Alert alert = new Alert(AlertType.INFORMATION);
+    	 	    	 alert.setTitle("Input an origin.");
+    	 	    	 alert.setHeaderText(null);
+    	 	    	 alert.setContentText("Please input an travel date!");
+    	 	    	 alert.showAndWait();		
+    	 	} else {
+    	 			Alert alert = new Alert(AlertType.INFORMATION);
+    	 	    	alert.setTitle("Results");
+    	 	    	alert.setHeaderText("Results: ");
+    	 	    	String mainDialog = "";
+
+    	 	    	ArrayList<HashMap<String,Object>> result = p.searchMain(originField.getText(), destField.getText(), dateField.getText());
+    	 	    	if (result.isEmpty()) {
+    	 	    		mainDialog = "No results found.";
+    	 	    	} else {
+    	 	    		for (int i = 0; i < result.size(); i++) {
+    	 	    			String number = String.valueOf(i+1);
+    	 	    			HashMap<String,Object> row = result.get(i);
+    	 	    			String dialog = "Result " + number + ":\n" + 
+    	 	    									"Origin: " + String.valueOf(row.get("ORIGIN_ACODE")) + "\n" +
+        	 										"Destination: " + String.valueOf(row.get("DESTINATION_ACODE")) + "\n" +
+        	 										"Departure Date: " + String.valueOf(row.get("DEPARTUREDATE")) + "\n" +
+        	 										"Departure time:" + String.valueOf(row.get("DEPARTURETIME")) + "\n" +
+        	 										"Arrival Date:" + String.valueOf(row.get("ARRIVALDATE")) + "\n" +
+        	 										"Arrival time:" + String.valueOf(row.get("ARRIVALTIME")) + "\n\n";
+
+    	 	    			mainDialog = mainDialog + dialog;
+    	 	    		}
+    	 	    	alert.setContentText(mainDialog);
+        	 		alert.showAndWait();
+    	 	    	}    
+    	 		}
+    	 	} 
+     	}
+ 	}     
  
   public void findSeat( ActionEvent e, TextField fsFNoField) {
-     //TODO     
      String fsFno = fsFNoField.getText();
-     p.checkSeatAvailabilities(fsFno);
      
-     
+     if (fsFno ==  null || fsFno.trim().isEmpty()) {
+    	 Alert alert = new Alert(AlertType.INFORMATION);
+    	 alert.setTitle("Input a flight number.");
+    	 alert.setHeaderText(null);
+    	 alert.setContentText("Please input a flight number!");
+    	 alert.showAndWait();
+     } else {
+    	 Alert alert = new Alert(AlertType.INFORMATION);
+    	 alert.setTitle("Seat Results.");
+    	 alert.setHeaderText("Available seats for flight number: " + fsFno);
+    	 
+    	 String dialog = "";
+    	 ArrayList<String> result = p.checkSeatAvailabilities(fsFno);
+    	 if (result.isEmpty()) {
+    		 dialog = "No results found.";
+    	 } else {
+    		 for (int i = 0; i < result.size(); i++) {
+    			 dialog = dialog + result.get(i) + "\n";
+    		 }	 
+    	 }
+    	 alert.setContentText(dialog);
+    	 alert.showAndWait();
+     }     
  }   
  
   

@@ -2,6 +2,7 @@ package pkg304flighdbdebug;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import oracle.jdbc.driver.OracleDriver;
 
@@ -21,7 +22,11 @@ public class DBManager {
 	public static void main(String[] args) throws SQLException {
 	 Passenger p = new Passenger();
 	 
-	 System.out.println(p.searchByAirportsUsed("2016-06-09","1336","2016-06-10","1237"));
+	 System.out.println(p.searchByAirportsUsed("2016-06-09","2016-06-10","1237","1336").get(0));
+	 
+	 
+	 System.out.println(p.searchMain("ZHP", "YXX", "2016-06-09").get(0));
+
 	//Passenger p = new Passenger();
 	//Employee e = new Employee();
 	//System.out.println(p.searchByAirline("porter airlines"));

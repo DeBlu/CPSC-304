@@ -8,10 +8,9 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.sun.rowset.internal.Row;
+import javax.swing.JOptionPane;
 
-import javafx.collections.ObservableList;
-import javafx.scene.control.TableView;
+import com.sun.rowset.internal.Row;
 
 public class Passenger {
 
@@ -20,9 +19,7 @@ public class Passenger {
 	public Passenger() {
 		dbm = new DBManager();
 	}
-	public ObservableList<ObservableList> data;
-	public TableView flightTable;
-	
+
 	public boolean addMember(String userid, String email, String passportNo) {
 		dbm.connect();
 		ResultSet rs = dbm
@@ -36,12 +33,13 @@ public class Passenger {
 		} catch (SQLException e) {
 			System.out.println("PassportNo does not exist.");
 			e.printStackTrace();
-		}
+		}			JOptionPane.showMessageDialog(null, "PassportNo does not exist.");
 		int i = 0;
 		if (count != 0) {
 			dbm.iud("insert into member values(" + "'" + userid + "'," + "'"
 					+ email + "','" + passportNo + "'," + "0" + ")");
 			System.out.println("Congratulations, you are now a member.");
+			JOptionPane.showMessageDialog(null, "Congratulations, you are now a member.");
 		}
 		i++;
 		dbm.disconnect();
@@ -58,6 +56,7 @@ public class Passenger {
 				+ " and email ='" + email + "'" + " and passportNo ='"
 				+ passportNo + "'");
 		System.out.println("Your personal account has been deleted.");
+		JOptionPane.showMessageDialog(null, "Your personal account has been deleted.");
 		i++;
 		dbm.disconnect();
 		if (i == 1)
@@ -81,7 +80,7 @@ public class Passenger {
 		} catch (SQLException e) {
 			System.out.println("Passenger does not exist in the DB.");
 			e.printStackTrace();
-		}
+		}JOptionPane.showMessageDialog(null, "Passenger does not exist in the DB.");
 		if (count == 0) {
 			System.out.println("Failed to update your personal information.");
 		}
@@ -89,6 +88,7 @@ public class Passenger {
 				+ ", userid ='" + nUserid + "'" + " where passportNo ='"
 				+ passportNo + "'");
 		System.out.println("Your personal account has been updated.");
+		JOptionPane.showMessageDialog(null, "Your personal account has been updated.");
 		i++;
 		dbm.disconnect();
 		if (i == 1)
@@ -123,17 +123,20 @@ public class Passenger {
 			} catch (SQLException e) {
 				System.out.println("Passenger does not exist in the DB.");
 				e.printStackTrace();
-			}
+			}JOptionPane.showMessageDialog(null, "Passenger does not exist in the DB.");
 			if (count1 != 0) {
 				System.out
 						.println("An account already exists with this passportNo.");
+				JOptionPane.showMessageDialog(null, "An account already exists with this passportNo.");
 			} else {
 				System.out
 						.println("You are eligible to apply for our membership program.");
+				JOptionPane.showMessageDialog(null, "You are eligible to apply for our membership program.");
 			}
 			dbm.disconnect();
 		} else {
 			System.out.println("Passenger does not exist in the DB.");
+			JOptionPane.showMessageDialog(null, "Passenger does not exist in the DB.");
 		}
 	}
 
@@ -176,6 +179,7 @@ public class Passenger {
 				+ seatNo + "')) where tID =" + newtID);
 		dbm.disconnect();
 		System.out.println(newtID);
+		JOptionPane.showMessageDialog(null, newtID);
 		return newtID;
 	}
 
@@ -207,7 +211,7 @@ public class Passenger {
 		dbm.connect();
 		ArrayList<String> flightNo = new ArrayList<String>();
 		ResultSet rs = dbm
-				.fetch("select acode from airport where upper(airline) = upper('"
+				.fetch("select acode from airport where upper(city) = upper('"
 						+ airline + "')");
 		try {
 			while (rs.next()) {
@@ -453,30 +457,7 @@ public class Passenger {
 	 * System.out.println("The airport does not exist."); e.printStackTrace(); }
 	 * dbm.disconnect(); return rows; }
 	 */
-	
-	public ArrayList<String> sortSeatBySeatType(String flightNo, String stName) {
-		dbm.connect();
-		ArrayList<String> seatNos = new ArrayList<String>();
-		ResultSet rs = dbm
-				.fetch("select seatNo from seat where available = 'TRUE' and flightNo = '"
-						+ flightNo + "' and stName = '" + stName + "'");
-		try {
-			while (rs.next()) {
-				ResultSetMetaData metadata = rs.getMetaData();
-				int numCols = metadata.getColumnCount();
 
-				for (int i = 0; i < numCols; i++) {
-					seatNos.add(rs.getString(i + 1));
-				}
-			}
-		} catch (SQLException e) {
-			System.out.println("Invalid data.");
-			e.printStackTrace();
-		}
-		dbm.disconnect();
-		return seatNos;		
-	}
-	
 	public ArrayList<String> checkSeatAvailabilities(String flightNo) {
 		dbm.connect();
 		ArrayList<String> seatNos = new ArrayList<String>();
@@ -493,7 +474,7 @@ public class Passenger {
 				}
 			}
 		} catch (SQLException e) {
-			System.out.println("Invalid flight.");
+			System.out.println("Invalid date.");
 			e.printStackTrace();
 		}
 		dbm.disconnect();
@@ -567,21 +548,25 @@ public class Passenger {
 		return rows;
 	}
 	
-	public String searchByAirportsUsed(String deptDate, String arrivalDate, String arrivalTime, String deptTime) {
+	public ArrayList<String> searchByAirportsUsed(String deptDate, String arrivalDate, String arrivalTime, String deptTime) {
 		dbm.connect();
-		String flightNo = null;
+		ArrayList<String> flightNos = new ArrayList<String>();
 		ResultSet rs = dbm
 				.fetch("select flightNo from Flight where departureDate = to_date('" + deptDate + "', 'YY-MM-DD') and arrivalDate = to_date('" + arrivalDate + "', 'YY-MM-DD') and arrivalTime = '" + arrivalTime + "' and departureTime = '" + deptTime + "'");
 		try {
 			while (rs.next()) {
-				flightNo = rs.getString(1);
+				ResultSetMetaData metadata = rs.getMetaData();
+				int numCols = metadata.getColumnCount();
+
+				for (int i = 0; i < numCols; i++) {
+					flightNos.add(rs.getString(i + 1));
+				}
 			}
 		} catch (SQLException e) {
 			System.out.println("Invalid data.");
 			e.printStackTrace();
 		}
 		dbm.disconnect();
-		return flightNo;		
+		return flightNos;		
 	}
-	
 }
