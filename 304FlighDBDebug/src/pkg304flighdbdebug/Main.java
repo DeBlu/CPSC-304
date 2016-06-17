@@ -74,7 +74,7 @@ public class Main extends Application {
         mmGrid.add(mmInstruct, 0, 1, 3, 1);
         
         //Search Flights Button
-        btnSearch = new Button("Search Flights");
+        btnSearch = new Button("Searh Flights");
         btnSearch.setOnAction(e -> changeScene(e));
         mmGrid.add(btnSearch, 0, 2);
         /*
@@ -318,6 +318,7 @@ public class Main extends Application {
         btnMTMM.setOnAction(e -> changeScene(e));
         mtGrid.add(btnMTMM, 4, 0);
         
+        */
         //CHANGE INFO
         
         //Change Info grid
@@ -369,7 +370,7 @@ public class Main extends Application {
         btnCIMM.setOnAction(e -> changeScene(e));
         ciGrid.add(btnCIMM, 4, 0);
         
-        */
+        
         //REGISTER
        
         
@@ -466,7 +467,7 @@ public class Main extends Application {
         newSeat = new TextField();
         csGrid.add(newSeat, 1, 2, 2, 1);
         
-        //Create Member button
+        //Change Seat button
         btnChange = new Button("Change");
         btnChange.setOnAction(e -> changeSeat(e, newSeat, oldSeat));
         csGrid.add(btnChange, 1, 4);
@@ -538,10 +539,10 @@ public class Main extends Application {
         daPassport = new TextField();
         daGrid.add(daPassport, 1, 3, 2, 1);
 
-        //Create Member button
-        btnDelete = new Button("Cancel Ticket");
+        //Delete Account button
+        btnDelete = new Button("Delete Account");
         btnDelete.setOnAction(e -> deleteAccount(e, daNameField, daEmailField, daPassport));
-        daGrid.add(btnCancel, 1, 4);
+        daGrid.add(btnDelete, 1, 4);
         
         //Cancel button; return to Main Menu
         btnDAMM = new Button("Main Menu");
@@ -553,7 +554,7 @@ public class Main extends Application {
         sfScene = new Scene(sfGrid, 450, 320);
         tpScene = new Scene (tpGrid, 450, 500);
         //mtScene = new Scene(mtGrid, 450, 320);
-        //ciScene = new Scene (ciGrid, 450, 320);
+        ciScene = new Scene (ciGrid, 450, 320);
         regScene = new Scene(regGrid, 450, 320);
         csScene = new Scene (csGrid, 450, 320);
         ctScene = new Scene (ctGrid, 450, 320);
@@ -686,7 +687,8 @@ public class Main extends Application {
       String daEmail = daEmailField.getText();
       String daPass = daPassport.getText();
       p.deleteAccount(daName, daEmail, daPass);
-  }
+   }
+  
   
 
     /**
