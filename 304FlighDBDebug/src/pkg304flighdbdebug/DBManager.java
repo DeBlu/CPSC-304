@@ -21,13 +21,9 @@ public class DBManager {
 
 	public static void main(String[] args) throws SQLException {
 	 Passenger p = new Passenger();
-	 
 	 System.out.println(p.searchByAirportsUsed("2016-06-09","2016-06-10","1237","1336").get(0));
-	 
-	 
 	 System.out.println(p.searchMain("ZHP", "YXX", "2016-06-09").get(0));
-
-	//Passenger p = new Passenger();
+	 System.out.println(p.searchByMinPrice());
 	//Employee e = new Employee();
 	//System.out.println(p.searchByAirline("porter airlines"));
 	//System.out.println(p.checkSeatAvailabilities("38092225"));

@@ -19,8 +19,10 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -38,9 +40,9 @@ public class Main extends Application {
             btnSearchFlight, btnSortAirline, btnSortPrice, btnSortDate,btnBusiness,
             btnFirst, btnEcon,btnEconPlus,btnBuy, btnTPPass, btnTPMem, btnMoreInfo,
             btnMTRMM, btnChangeInfo, btnUpdateInfo, btnCI, btnCT, btnCS, btnDA, btnTP,
-            btnChange, btnCancel, btnDelete, btnFS, btnFSMM, btnFindSeat;
+            btnChange, btnCancel, btnDelete, btnFS, btnFSMM, btnFindSeat, btnSCT, btnSET;
     Scene mmScene, sfScene, srScene,  mtScene, regScene, fiScene, ssScene, tpScene, mtrScene, ciScene,
-            csScene, ctScene, daScene, fsScene;
+            csScene, ctScene, daScene, fsScene, setScene, sctScene;
     GridPane srGrid, fiGrid, ssGrid;
     Stage thestage;
     PasswordField userPassField;
@@ -112,6 +114,15 @@ public class Main extends Application {
         btnTP.setOnAction(e -> changeScene(e));
         mmGrid.add(btnTP, 2, 3);
         
+        //Sort By Min Price
+        btnSCT = new Button("Show Cheapest Tickets");
+        btnSCT.setOnAction(e -> cheapestTickets());
+        mmGrid.add(btnSCT, 3, 3);
+        
+        //Sort By Max Price
+        btnSET = new Button("Show Most Expensive Tickets");
+        btnSET.setOnAction(e -> expensiveTickets());
+        mmGrid.add(btnSET, 3, 2);
        
        //Instructions
         Text mmInstruct2 = new Text ("Employee Functions");
@@ -571,7 +582,7 @@ public class Main extends Application {
         primaryStage.show();
     }
 
- public void changeScene(ActionEvent e)
+public void changeScene(ActionEvent e)
     {
         if (e.getSource()==btnSearch)
             thestage.setScene(sfScene);
@@ -591,12 +602,99 @@ public class Main extends Application {
             thestage.setScene(tpScene);
         if (e.getSource()==btnFS)
             thestage.setScene(fsScene);
+        if (e.getSource()==btnSCT)
+        	thestage.setScene(sctScene);
+        if (e.getSource()==btnSET)
+        	thestage.setScene(setScene);
         if (e.getSource()==btnSFMM||e.getSource()==btnMTMM||e.getSource()==btnRegMM
                 ||e.getSource()==btnDAMM||e.getSource()==btnCSMM||e.getSource()==btnCTMM
                 ||e.getSource()==btnTPMM||e.getSource()==btnRegMM||e.getSource()==btnCIMM
                 ||e.getSource()==btnFSMM)
             thestage.setScene(mmScene);
     }
+	public void expensiveTickets() {
+		Alert alert = new Alert(AlertType.INFORMATION);
+ 		alert.setTitle("WOW you must be rich!");
+ 		alert.setHeaderText("Click 'Show details' underneath.");
+ 		String mainDialog = "";
+
+ 		ArrayList<HashMap<String,Object>> result = p.searchByMaxPrice();
+	    if (result.isEmpty()) {
+	    	mainDialog = "No results found.";
+	    } else {
+	    	for (int i = 0; i < result.size(); i++) {
+	    		String number = String.valueOf(i+1);
+	    		HashMap<String,Object> row = result.get(i);
+	    		String dialog = "Result " + number + ":\n" + 
+	    								"Price: " + String.valueOf(row.get("TOTALCOST")) + "\n" +
+ 										"Flight number: " + String.valueOf(row.get("FLIGHTNO")) + "\n" +
+ 										"Seat Number: " + String.valueOf(row.get("SEATNO")) + "\n\n";
+
+	    		mainDialog = mainDialog + dialog;
+	    	}
+	    }
+ 		
+ 		TextArea textArea = new TextArea(mainDialog);
+ 		textArea.setEditable(false);
+ 		textArea.setWrapText(true);
+
+ 		textArea.setMaxWidth(Double.MAX_VALUE);
+ 		textArea.setMaxHeight(Double.MAX_VALUE);
+ 		GridPane.setVgrow(textArea, Priority.ALWAYS);
+ 		GridPane.setHgrow(textArea, Priority.ALWAYS);
+
+ 		GridPane expContent = new GridPane();
+ 		expContent.setMaxWidth(Double.MAX_VALUE);
+ 		expContent.add(textArea, 0, 1);
+
+ 		// Set expandable Exception into the dialog pane.
+ 		alert.getDialogPane().setExpandableContent(expContent);
+
+ 		//alert.setContentText("Please input an origin!");
+ 		alert.showAndWait();
+}
+
+ 	public void cheapestTickets() {
+ 		Alert alert = new Alert(AlertType.INFORMATION);
+ 		alert.setTitle("WOW WHAT A BARGAIN!");
+ 		alert.setHeaderText("Click 'Show details' underneath.");
+ 		String mainDialog = "";
+
+ 		ArrayList<HashMap<String,Object>> result = p.searchByMinPrice();
+	    if (result.isEmpty()) {
+	    	mainDialog = "No results found.";
+	    } else {
+	    	for (int i = 0; i < result.size(); i++) {
+	    		String number = String.valueOf(i+1);
+	    		HashMap<String,Object> row = result.get(i);
+	    		String dialog = "Result " + number + ":\n" + 
+	    								"Price: " + String.valueOf(row.get("TOTALCOST")) + "\n" +
+ 										"Flight number: " + String.valueOf(row.get("FLIGHTNO")) + "\n" +
+ 										"Seat Number: " + String.valueOf(row.get("SEATNO")) + "\n\n";
+
+	    		mainDialog = mainDialog + dialog;
+	    	}
+	    }
+ 		
+ 		TextArea textArea = new TextArea(mainDialog);
+ 		textArea.setEditable(false);
+ 		textArea.setWrapText(true);
+
+ 		textArea.setMaxWidth(Double.MAX_VALUE);
+ 		textArea.setMaxHeight(Double.MAX_VALUE);
+ 		GridPane.setVgrow(textArea, Priority.ALWAYS);
+ 		GridPane.setHgrow(textArea, Priority.ALWAYS);
+
+ 		GridPane expContent = new GridPane();
+ 		expContent.setMaxWidth(Double.MAX_VALUE);
+ 		expContent.add(textArea, 0, 1);
+
+ 		// Set expandable Exception into the dialog pane.
+ 		alert.getDialogPane().setExpandableContent(expContent);
+
+ 		//alert.setContentText("Please input an origin!");
+ 		alert.showAndWait();
+ 	}
  	public void Register( ActionEvent e, TextField userNameField, TextField userEmail, TextField userPassport) {          
         String uName = userNameField.getText();
         String uEmail = userEmail.getText();
@@ -623,8 +721,7 @@ public class Main extends Application {
  }       
  */
 
- 	public void searchFlight( ActionEvent e, TextField originField, TextField destField, TextField dateField) {
-     
+ 	public void searchFlight( ActionEvent e, TextField originField, TextField destField, TextField dateField) {   
      if (originField.getText() ==  null || originField.getText().trim().isEmpty()) {
     	 Alert alert = new Alert(AlertType.INFORMATION);
     	 alert.setTitle("Input an origin.");
