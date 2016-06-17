@@ -44,7 +44,7 @@ public class DBManager {
 			DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
 			c = DriverManager.getConnection(
 					"jdbc:oracle:thin:@localhost.ugrad.cs.ubc.ca:1522:ug",
-					"ora_x5v8", "a39245121");
+					"ora_n1y8", "a53693123");
 			s = c.createStatement();
 		} catch (SQLException e) {
 			e.printStackTrace();

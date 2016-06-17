@@ -32,7 +32,7 @@ public class Passenger {
 		} catch (SQLException e) {
 			System.out.println("PassportNo does not exist.");
 			e.printStackTrace();
-		}			JOptionPane.showMessageDialog(null, "PassportNo does not exist.");
+		}			//JOptionPane.showMessageDialog(null, "PassportNo does not exist.");
 		int i = 0;
 		if (count != 0) {
 			dbm.iud("insert into member values(" + "'" + userid + "'," + "'"

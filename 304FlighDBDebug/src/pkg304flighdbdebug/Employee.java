@@ -26,8 +26,7 @@ public class Employee {
 			System.out.println("Failed to change seat type.");
 			e.printStackTrace();
 		}
-		System.out.println("Seat Number exist but already occupied: " + checkExist);
-		JOptionPane.showMessageDialog(null, "Seat Number exist.");
+		System.out.println("Seat Number exist: " + checkExist);
 		if (checkExist == 0) {
 			System.out.println("seat " + seatNo
 					+ "does not exist in the database.");
@@ -38,6 +37,7 @@ public class Employee {
 				.fetch("select available, stName from seat where seatNo = '"
 						+ seatNo + "' AND available = 'TRUE'");
 		String updatedSeatType = "";
+		int i = 0;
 		try {
 			while (rs1.next()) {
 				rs1.getString("available");
@@ -51,12 +51,14 @@ public class Employee {
 						+ updatedSeatType + ", " + seatNo + ".");
 				JOptionPane.showMessageDialog(null, "Seat " + oriSN + " has been updated to "
 						+ updatedSeatType + ", " + seatNo + ".");
-			}
+				i++;
+			} 
 		} catch (SQLException e) {
 			System.out.println("Failed to change seat type.");
 			JOptionPane.showMessageDialog(null, "Failed to change seat type.");
 			e.printStackTrace();
 		}
+		if(i==0){JOptionPane.showMessageDialog(null, "Failed to change seat type.");};
 		dbm.disconnect();
 	}
 
