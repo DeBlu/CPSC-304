@@ -475,13 +475,13 @@ public class Main extends Application {
         csGrid.add(csTitle, 0, 0, 2, 1);
 
         //Original Seat Number
-        Label csOldSeat = new Label("Old Seat #:");
+        Label csOldSeat = new Label("New Seat #:");
         csGrid.add(csOldSeat, 0, 1);
         oldSeat = new TextField();
         csGrid.add(oldSeat, 1, 1);
 
         //New Seat Number
-        Label csNewSeat = new Label("New Seat #:");
+        Label csNewSeat = new Label("Old Seat #:");
         csGrid.add(csNewSeat, 0, 2);
         newSeat = new TextField();
         csGrid.add(newSeat, 1, 2, 2, 1);
