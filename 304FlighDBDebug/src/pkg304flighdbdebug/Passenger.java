@@ -40,7 +40,7 @@ public class Passenger {
 			System.out.println("Congratulations, you are now a member.");
 			JOptionPane.showMessageDialog(null, "Congratulations, you are now a member.");
 		}
-		i++;
+		i+=1;
 		dbm.disconnect();
 		if (i == 1)
 			return true;

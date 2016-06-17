@@ -51,14 +51,14 @@ public class Employee {
 						+ updatedSeatType + ", " + seatNo + ".");
 				JOptionPane.showMessageDialog(null, "Seat " + oriSN + " has been updated to "
 						+ updatedSeatType + ", " + seatNo + ".");
-				i++;
+				i+=1;
 			} 
 		} catch (SQLException e) {
 			System.out.println("Failed to change seat type.");
 			JOptionPane.showMessageDialog(null, "Failed to change seat type.");
 			e.printStackTrace();
 		}
-		if(i==0){JOptionPane.showMessageDialog(null, "Failed to change seat type.");};
+		if(i==0){JOptionPane.showMessageDialog(null, "Failed to change seat type, seat already occupied.");};
 		dbm.disconnect();
 	}
 
