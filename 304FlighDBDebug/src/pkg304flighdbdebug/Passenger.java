@@ -82,13 +82,14 @@ public class Passenger {
 		}JOptionPane.showMessageDialog(null, "Passenger does not exist in the DB.");
 		if (count == 0) {
 			System.out.println("Failed to update your personal information.");
-		}
+		} else {
 		dbm.iud("update member set " + "email ='" + nEmail + "'"
 				+ ", userid ='" + nUserid + "'" + " where passportNo ='"
 				+ passportNo + "'");
 		System.out.println("Your personal account has been updated.");
 		JOptionPane.showMessageDialog(null, "Your personal account has been updated.");
 		i++;
+		}
 		dbm.disconnect();
 		if (i == 1)
 			return true;
