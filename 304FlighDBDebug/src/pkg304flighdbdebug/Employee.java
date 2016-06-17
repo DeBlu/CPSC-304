@@ -3,6 +3,8 @@ import java.sql.*;
 
 import javax.swing.JOptionPane;
 
+import javax.swing.JOptionPane;
+
 public class Employee {
 
 	DBManager dbm;
