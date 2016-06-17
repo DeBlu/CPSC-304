@@ -6,6 +6,8 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.swing.JOptionPane;
+
 import com.sun.rowset.internal.Row;
 
 public class Passenger {
@@ -29,12 +31,13 @@ public class Passenger {
 		} catch (SQLException e) {
 			System.out.println("PassportNo does not exist.");
 			e.printStackTrace();
-		}
+		}			JOptionPane.showMessageDialog(null, "PassportNo does not exist.");
 		int i = 0;
 		if (count != 0) {
 			dbm.iud("insert into member values(" + "'" + userid + "'," + "'"
 					+ email + "','" + passportNo + "'," + "0" + ")");
 			System.out.println("Congratulations, you are now a member.");
+			JOptionPane.showMessageDialog(null, "Congratulations, you are now a member.");
 		}
 		i++;
 		dbm.disconnect();
@@ -51,6 +54,7 @@ public class Passenger {
 				+ " and email ='" + email + "'" + " and passportNo ='"
 				+ passportNo + "'");
 		System.out.println("Your personal account has been deleted.");
+		JOptionPane.showMessageDialog(null, "Your personal account has been deleted.");
 		i++;
 		dbm.disconnect();
 		if (i == 1)
@@ -74,7 +78,7 @@ public class Passenger {
 		} catch (SQLException e) {
 			System.out.println("Passenger does not exist in the DB.");
 			e.printStackTrace();
-		}
+		}JOptionPane.showMessageDialog(null, "Passenger does not exist in the DB.");
 		if (count == 0) {
 			System.out.println("Failed to update your personal information.");
 		}
@@ -82,6 +86,7 @@ public class Passenger {
 				+ ", userid ='" + nUserid + "'" + " where passportNo ='"
 				+ passportNo + "'");
 		System.out.println("Your personal account has been updated.");
+		JOptionPane.showMessageDialog(null, "Your personal account has been updated.");
 		i++;
 		dbm.disconnect();
 		if (i == 1)
@@ -116,17 +121,20 @@ public class Passenger {
 			} catch (SQLException e) {
 				System.out.println("Passenger does not exist in the DB.");
 				e.printStackTrace();
-			}
+			}JOptionPane.showMessageDialog(null, "Passenger does not exist in the DB.");
 			if (count1 != 0) {
 				System.out
 						.println("An account already exists with this passportNo.");
+				JOptionPane.showMessageDialog(null, "An account already exists with this passportNo.");
 			} else {
 				System.out
 						.println("You are eligible to apply for our membership program.");
+				JOptionPane.showMessageDialog(null, "You are eligible to apply for our membership program.");
 			}
 			dbm.disconnect();
 		} else {
 			System.out.println("Passenger does not exist in the DB.");
+			JOptionPane.showMessageDialog(null, "Passenger does not exist in the DB.");
 		}
 	}
 
@@ -169,6 +177,7 @@ public class Passenger {
 				+ seatNo + "')) where tID =" + newtID);
 		dbm.disconnect();
 		System.out.println(newtID);
+		JOptionPane.showMessageDialog(null, newtID);
 		return newtID;
 	}
 
