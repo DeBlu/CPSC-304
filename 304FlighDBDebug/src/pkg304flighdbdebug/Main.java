@@ -750,7 +750,7 @@ public void changeScene(ActionEvent e)
 
     	 	    	ArrayList<HashMap<String,Object>> result = p.searchMain(originField.getText(), destField.getText(), dateField.getText());
     	 	    	if (result.isEmpty()) {
-    	 	    		mainDialog = "No results found.";
+    	 	    		mainDialog = "None found.";
     	 	    	} else {
     	 	    		for (int i = 0; i < result.size(); i++) {
     	 	    			String number = String.valueOf(i+1);
@@ -765,9 +765,9 @@ public void changeScene(ActionEvent e)
 
     	 	    			mainDialog = mainDialog + dialog;
     	 	    		}
+    	 	    	} 
     	 	    	alert.setContentText(mainDialog);
         	 		alert.showAndWait();
-    	 	    	}    
     	 		}
     	 	} 
      	}
