@@ -85,8 +85,8 @@ public class Passenger {
 			JOptionPane.showMessageDialog(null, "Passenger does not exist in the DB.");
 		} else {
 		dbm.iud("update member set email ='" + nEmail + "'"
-				+ "and userid ='" + nUserid + "'" + " where passportNo ='"
-				+ passportNo + "'");
+	           + ", userid" + "='" + nUserid + "'" + " where passportNo ='"
+	           + passportNo + "'");
 		System.out.println("Your personal account has been updated.");
 		JOptionPane.showMessageDialog(null, "Your personal account has been updated.");
 		i++;
@@ -571,4 +571,28 @@ public class Passenger {
 		dbm.disconnect();
 		return flightNos;		
 	}
+	
+	//****** THIS METHOD WAS ADDED AFTER THE DEADLINE ******//
+	
+public ArrayList<String> phobia() {
+	dbm.connect();
+	ArrayList<String> flightNos = new ArrayList<String>();
+	
+	ResultSet rs = dbm.fetch("select flightNo, ptName from flight natural join plane minus select flightNo, ptName from flight natural join plane where ptName = 'Bombardier CRJ700'");
+	try {
+		while (rs.next()) {
+			ResultSetMetaData metadata = rs.getMetaData();
+			int numCols = metadata.getColumnCount();
+
+			for (int i = 0; i < numCols; i++) {
+				flightNos.add(rs.getString(i + 1));
+			}
+		}
+	} catch (SQLException e) {
+		System.out.println("Invalid data.");
+		e.printStackTrace();
+	}
+	dbm.disconnect();
+	return flightNos;	
+}	
 }

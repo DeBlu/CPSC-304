@@ -40,7 +40,7 @@ public class Main extends Application {
             btnSearchFlight, btnSortAirline, btnSortPrice, btnSortDate,btnBusiness,
             btnFirst, btnEcon,btnEconPlus,btnBuy, btnTPPass, btnTPMem, btnMoreInfo,
             btnMTRMM, btnChangeInfo, btnUpdateInfo, btnCI, btnCT, btnCS, btnDA, btnTP,
-            btnChange, btnCancel, btnDelete, btnFS, btnFSMM, btnFindSeat, btnSCT, btnSET;
+            btnChange, btnCancel, btnDelete, btnFS, btnFSMM, btnFindSeat, btnSCT, btnSET, btnPHOBIA;
     Scene mmScene, sfScene, srScene,  mtScene, regScene, fiScene, ssScene, tpScene, mtrScene, ciScene,
             csScene, ctScene, daScene, fsScene, setScene, sctScene;
     GridPane srGrid, fiGrid, ssGrid;
@@ -123,6 +123,11 @@ public class Main extends Application {
         btnSET = new Button("Show Most Expensive Tickets");
         btnSET.setOnAction(e -> expensiveTickets());
         mmGrid.add(btnSET, 3, 2);
+        
+        //Phobia Button
+        btnPHOBIA = new Button("***For Smallplanephobia Peeps");
+        btnPHOBIA.setOnAction(e -> phobia());
+        mmGrid.add(btnPHOBIA, 4, 2);
        
        //Instructions
         Text mmInstruct2 = new Text ("Employee Functions");
@@ -634,6 +639,7 @@ public void changeScene(ActionEvent e)
 	    	}
 	    }
  		
+	    //source: http://code.makery.ch/blog/javafx-dialogs-official/
  		TextArea textArea = new TextArea(mainDialog);
  		textArea.setEditable(false);
  		textArea.setWrapText(true);
@@ -675,7 +681,7 @@ public void changeScene(ActionEvent e)
 	    		mainDialog = mainDialog + dialog;
 	    	}
 	    }
- 		
+ 		// source: http://code.makery.ch/blog/javafx-dialogs-official/
  		TextArea textArea = new TextArea(mainDialog);
  		textArea.setEditable(false);
  		textArea.setWrapText(true);
@@ -704,6 +710,40 @@ public void changeScene(ActionEvent e)
         p.addMember(uName, uEmail, uPass);
     
     }
+ 	// ********* THIS METHOD ADDED AFTER THE DEADLINE ******** //
+ 	public void phobia() {
+ 		ArrayList<String> result = p.phobia();
+ 		Alert alert = new Alert(AlertType.INFORMATION);
+ 		alert.setTitle("Fear of small planes D:");
+ 		alert.setHeaderText("For those who fear flying on small planes (ie. Bombardier CRJ700)");
+ 		String dialog = "";
+ 		
+ 		for (int i = 0; i < result.size(); i++) {
+ 			String flightNo = result.get(i);
+ 			String pt = result.get(i+1);
+ 			i++;
+ 			dialog = dialog + "Flight number: " + flightNo + "\n" + "Plane type: " + pt + "\n\n"; 
+ 		}
+ 		
+ 	// source: http://code.makery.ch/blog/javafx-dialogs-official/
+ 	 		TextArea textArea = new TextArea(dialog);
+ 	 		textArea.setEditable(false);
+ 	 		textArea.setWrapText(true);
+
+ 	 		textArea.setMaxWidth(Double.MAX_VALUE);
+ 	 		textArea.setMaxHeight(Double.MAX_VALUE);
+ 	 		GridPane.setVgrow(textArea, Priority.ALWAYS);
+ 	 		GridPane.setHgrow(textArea, Priority.ALWAYS);
+
+ 	 		GridPane expContent = new GridPane();
+ 	 		expContent.setMaxWidth(Double.MAX_VALUE);
+ 	 		expContent.add(textArea, 0, 1);
+
+ 	 		// Set expandable Exception into the dialog pane.
+ 	 		alert.getDialogPane().setExpandableContent(expContent);
+
+ 		alert.showAndWait();
+ 	}
  /*
  public void findTicks( ActionEvent e, TextField passNumField, TextField userNameField, TextField userPassport){
         //TODO Find tickets passed on Passport or Member login
